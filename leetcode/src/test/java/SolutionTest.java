@@ -14,6 +14,7 @@ public class SolutionTest {
 
     @Test
     public void mergeAlternately() {
+        assertEquals("apbqcd", solution.mergeAlternately("abcd", "pq"));
     }
 
     @Test
@@ -33,7 +34,21 @@ public class SolutionTest {
         assertEquals(4, solution.magicalString(7));
         assertEquals(6, solution.magicalString(13));
         assertEquals(7, solution.magicalString(14));
+    }
 
+    @Test
+    public void arrayStringsAreEqual(){
+        assertFalse(solution.arrayStringsAreEqual(new String[]{"a", "cb"}, new String[]{"ab", "c"}));
+        assertTrue(solution.arrayStringsAreEqual(new String[]{"abc", "d", "defg"}, new String[]{"abcddefg"}));
+    }
+
+    @Test
+    public void findMedianSortedArrays(){
+        assertEquals(2, solution.findMedianSortedArrays(new int[]{1,3}, new int[]{2}), 0);
+        assertEquals(2.5, solution.findMedianSortedArrays(new int[]{1,2}, new int[]{3,4}), 0);
+        assertEquals(1, solution.findMedianSortedArrays(new int[]{1}, new int[]{}), 0);
+        assertEquals(1.5, solution.findMedianSortedArrays(new int[]{1}, new int[]{2}), 0);
+        assertEquals(100000.5, solution.findMedianSortedArrays(new int[]{100000}, new int[]{100001}), 0);
     }
 
 

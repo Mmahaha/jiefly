@@ -70,4 +70,44 @@ public class Solution {
         return String.join("", word1).equals(String.join("", word2));
     }
 
+    // 4. 寻找两个正序数组的中位数
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int length = nums1.length + nums2.length;
+        int pointer = 0, p1 = 0, p2 = 0;
+        int leftIndex, rightIndex;
+        if ((length & 1) == 1){
+            leftIndex = (length - 1) / 2;
+            rightIndex = leftIndex;
+        } else {
+            leftIndex = (length - 1) / 2;
+            rightIndex = leftIndex + 1;
+        }
+        int curVal, leftValue = 0, rightValue=0;
+        while(pointer <= rightIndex){
+            int val1 = Integer.MAX_VALUE, val2 = Integer.MAX_VALUE;
+            if (p1 < nums1.length){
+                val1 = nums1[p1];
+            }
+            if (p2 < nums2.length){
+                val2 = nums2[p2];
+            }
+            if (val1 < val2){
+                curVal = val1;
+                p1 ++;
+            }else {
+                curVal = val2;
+                p2 ++;
+            }
+            if (pointer == leftIndex){
+                leftValue = curVal;
+            }
+            if (pointer == rightIndex){
+                rightValue = curVal;
+            }
+            pointer++;
+        }
+        return (leftValue + rightValue)/2d;
+    }
+
+
 }
