@@ -109,5 +109,16 @@ public class Solution {
         return (leftValue + rightValue)/2d;
     }
 
+    // 1668. 最大重复子字符串   TODO kmp
+    public int maxRepeating(String sequence, String word) {
+        StringBuilder sb = new StringBuilder(word);
+        int result = 0;
+        while (sequence.contains(sb)){
+            result ++;
+            sb.append(word);
+        }
+        return result;
+    }
+
 
 }

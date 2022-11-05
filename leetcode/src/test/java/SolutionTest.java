@@ -1,6 +1,9 @@
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import static org.junit.Assert.*;
 
 public class SolutionTest {
@@ -51,5 +54,14 @@ public class SolutionTest {
         assertEquals(100000.5, solution.findMedianSortedArrays(new int[]{100000}, new int[]{100001}), 0);
     }
 
+    @Test
+    public void maxRepeating(){
+        assertEquals(2, solution.maxRepeating("ababc", "ab"));
+        assertEquals(1, solution.maxRepeating("ababc", "ba"));
+        assertEquals(0, solution.maxRepeating("ababc", "ac"));
+        assertEquals(1, solution.maxRepeating("ac", "ac"));
+        assertEquals(1, solution.maxRepeating("a", "a"));
+        assertEquals(7, solution.maxRepeating("aaabaaaabaaabaaaabaaaabaaaabaaaabaaaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba"));
+    }
 
 }
