@@ -71,4 +71,11 @@ public class SolutionTest {
         assertFalse(solution.parseBoolExpr("&(t,f)"));
         assertFalse(solution.parseBoolExpr("|(&(t,f,t),!(t))|(&(t,f,t),!(t))"));
     }
+
+    @Test
+    public void interpret() {
+        assertEquals("Goal", solution.interpret("G()(al)"));
+        assertEquals("Gooooal", solution.interpret("G()()()()(al)"));
+        assertEquals("alGalooG", solution.interpret("(al)G(al)()()G"));
+    }
 }

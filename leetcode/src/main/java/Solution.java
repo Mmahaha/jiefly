@@ -159,6 +159,25 @@ public class Solution {
         return stack.pop() == 't';
     }
 
+    // 1678. 设计 Goal 解析器
+    public String interpret(String command) {
+        StringBuilder sb = new StringBuilder();
+        int index = -1;
+        while (++index < command.length()){
+            char c = command.charAt(index);
+            if (c == 'G'){
+                sb.append(c);
+            } else if (c == '('){
+                if (command.charAt(++index) == ')'){
+                    sb.append('o');
+                } else {
+                    index += 2;
+                    sb.append("al");
+                }
+            }
+        }
+        return sb.toString();
+    }
 
 
 }
