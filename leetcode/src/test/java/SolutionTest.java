@@ -64,4 +64,11 @@ public class SolutionTest {
         assertEquals(7, solution.maxRepeating("aaabaaaabaaabaaaabaaaabaaaabaaaabaaaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba"));
     }
 
+    @Test
+    public void parseBoolExpr(){
+        assertTrue(solution.parseBoolExpr("!(f)"));
+        assertTrue(solution.parseBoolExpr("|(f,t)"));
+        assertFalse(solution.parseBoolExpr("&(t,f)"));
+        assertFalse(solution.parseBoolExpr("|(&(t,f,t),!(t))|(&(t,f,t),!(t))"));
+    }
 }

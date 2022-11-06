@@ -1,3 +1,7 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 public class Solution {
     // 1768. 交替合并字符串
     public String mergeAlternately(String word1, String word2) {
@@ -70,7 +74,7 @@ public class Solution {
         return String.join("", word1).equals(String.join("", word2));
     }
 
-    // 4. 寻找两个正序数组的中位数
+    // 4. 寻找两个正序数组的中位数 TODO O(N)=log(m+n)
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int length = nums1.length + nums2.length;
         int pointer = 0, p1 = 0, p2 = 0;
@@ -119,6 +123,42 @@ public class Solution {
         }
         return result;
     }
+
+    // 1106. 解析布尔表达式
+    public boolean parseBoolExpr(String expression) {
+        Deque<Character> stack = new ArrayDeque<>();
+        char processing;
+        int p = -1, length = expression.length();
+        while (++p < length){
+            char c = expression.charAt(p);
+            if(c != ')'){
+                stack.push(c);
+            } else {
+                int t = 0, f = 0;
+                // 开始解析一个括号内的表达式
+                while ((processing = stack.pop()) != '('){
+                    if (processing == 't'){
+                        t++;
+                    } else if (processing == 'f'){
+                        f++;
+                    }
+                }
+                switch (stack.pop()){
+                    case '!':
+                        stack.push(t == 1 ? 'f' : 't');
+                        break;
+                    case '&':
+                        stack.push(f == 0 ? 't' : 'f');
+                        break;
+                    case '|':
+                        stack.push(t == 0 ? 'f' : 't');
+                        break;
+                }
+            }
+        }
+        return stack.pop() == 't';
+    }
+
 
 
 }
