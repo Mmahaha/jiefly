@@ -267,5 +267,28 @@ public class Solution {
 
     }
 
+    // 5. 最长回文子串，这里用的是中心扩张法
+    public String longestPalindrome(String s) {
+        int p = -1, p1, left = 0, right = 0;
+        int[] p2Array;
+        while (++p < s.length() - 1){
+            if (s.charAt(p) == s.charAt(p+1)){
+                p2Array = new int[]{p, p+1};
+            } else {
+                p2Array = new int[]{p};
+            }
+            for (int p2: p2Array){
+                p1 = p;
+                //noinspection StatementWithEmptyBody
+                while(((--p1 >= 0) & (++p2 < s.length())) && s.charAt(p1) == s.charAt(p2)){}
+                if ((right - left) < (p2 - p1 - 2)){
+                    left = p1 + 1;
+                    right = p2 - 1;
+                }
+            }
+
+        }
+        return s.substring(left, right + 1);
+    }
 
 }

@@ -105,4 +105,14 @@ public class SolutionTest {
         System.out.println(solution.ambiguousCoordinates("(00011)"));
         System.out.println(solution.ambiguousCoordinates("(100)"));
     }
+
+    @Test
+    public void longestPalindrome() {
+        assertEquals("bab", solution.longestPalindrome("babad"));
+        assertEquals("bb", solution.longestPalindrome("cbbd"));
+        assertEquals("ff", solution.longestPalindrome("ff"));
+        assertEquals("ffff", solution.longestPalindrome("ffff"));
+        assertEquals("a", solution.longestPalindrome("a"));
+        assertEquals("ccc", solution.longestPalindrome("acccb"));
+    }
 }
