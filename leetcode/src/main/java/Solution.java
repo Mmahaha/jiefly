@@ -1,6 +1,7 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Solution {
     // 1768. 交替合并字符串
@@ -178,6 +179,51 @@ public class Solution {
         }
         return sb.toString();
     }
+
+
+    /**
+     * 通过kmp实现String.indexOf()
+     * @param expression    字符串的完整表达式
+     * @param pattern   要匹配的内容
+     * @return  返回第一个下标
+     */
+    public int indexOf(String expression, String pattern){
+        List<Integer> next = buildNext(pattern);
+        for (int i = 0, j = 0; i < expression.length(); i++){
+            while (j > 0 && expression.charAt(i) != pattern.charAt(j)){
+                j = next.get(j);
+            }
+            if (expression.charAt(i) == pattern.charAt(j)){
+                j++;
+            }
+            if (j == pattern.length()){
+                return i - pattern.length() + 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 根据pattern构造next数组
+     * 譬如 ababc，会构造出(0,0,0,1,2)
+     * 原理：拿pattern和向右shift一位的pattern进行比较
+     * @param pattern   要构造的字符串
+     * @return  返回next数组，下标i表示长度小于i的最长相同前后缀长度
+     */
+    public List<Integer> buildNext(String pattern){
+        List<Integer> next = Stream.of(0, 0).collect(Collectors.toList());
+        for (int i = 1, j = 0; i< pattern.length(); i++){
+            while (j > 0 && pattern.charAt(i) != pattern.charAt(j)){
+                j = next.get(j);
+            }
+            if (pattern.charAt(i) == pattern.charAt(j)){
+                j++;
+            }
+            next.add(j);
+        }
+        return next;
+    }
+
 
 
 }

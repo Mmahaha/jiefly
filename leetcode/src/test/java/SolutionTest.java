@@ -78,4 +78,21 @@ public class SolutionTest {
         assertEquals("Gooooal", solution.interpret("G()()()()(al)"));
         assertEquals("alGalooG", solution.interpret("(al)G(al)()()G"));
     }
+
+
+    @Test
+    public void match() {
+//        System.out.println(solution.match("abcabcbdlabc", "bc"));
+    }
+
+
+    @Test
+    public void buildNext() {
+        System.out.println(solution.buildNext("ababc"));
+    }
+
+    @Test
+    public void indexOf() {
+        assertEquals(3, solution.indexOf("abaababcdd", "ababc"));
+    }
 }
