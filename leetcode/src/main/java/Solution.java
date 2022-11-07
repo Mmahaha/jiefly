@@ -224,6 +224,48 @@ public class Solution {
         return next;
     }
 
+    // 816. 模糊坐标
+    Map<String, List<String>> cache = new HashMap<>(16);
+    public List<String> ambiguousCoordinates(String s) {
+        List<String> result = new ArrayList<>();
+        // 先去掉两个括号
+        String numbers = s.substring(1, s.length() - 1);
+        int length = numbers.length();
+        int p = 0;
+        while (++p < length){
+            String n1 = numbers.substring(0, p);
+            List<String> xList = splitNumToDecimals(n1);
+            String n2 = numbers.substring(p, length);
+            List<String> yList = splitNumToDecimals(n2);
+            // 结果中加入两者的笛卡尔积
+            result.addAll(xList.stream().flatMap(x -> yList.stream().map(y -> String.format("(%s, %s)", x ,y))).collect(Collectors.toList()));
+        }
+        return result;
+    }
+
+    public List<String> splitNumToDecimals(String number2){
+        return cache.computeIfAbsent(number2, number -> {
+            List<String> result = new ArrayList<>();
+            if (!number.startsWith("0") || number.length() == 1){
+                result.add(number);
+            }
+            int p = 0;
+            int length = number.length();
+            while (++p < length){
+                String integerPart = number.substring(0, p);
+                if (integerPart.startsWith("0") && integerPart.length() > 1){
+                    continue;
+                }
+                String decimalPart = number.substring(p, length);
+                if (decimalPart.endsWith("0")){
+                    continue;
+                }
+                result.add(String.join(".", integerPart, decimalPart));
+            }
+            return result;
+        });
+
+    }
 
 
 }

@@ -2,6 +2,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
@@ -94,5 +96,13 @@ public class SolutionTest {
     @Test
     public void indexOf() {
         assertEquals(3, solution.indexOf("abaababcdd", "ababc"));
+    }
+
+    @Test
+    public void ambiguousCoordinates() {
+        System.out.println(solution.ambiguousCoordinates("(123)"));
+        System.out.println(solution.ambiguousCoordinates("(0123)"));
+        System.out.println(solution.ambiguousCoordinates("(00011)"));
+        System.out.println(solution.ambiguousCoordinates("(100)"));
     }
 }
