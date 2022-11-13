@@ -1,3 +1,6 @@
+import com.google.common.collect.ImmutableMap;
+
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -291,4 +294,21 @@ public class Solution {
         return s.substring(left, right + 1);
     }
 
+    // 1684. 统计一致字符串的数目
+    public int countConsistentStrings(String allowed, String[] words) {
+        BitSet bitSet = new BitSet();
+        int result = words.length;
+        for (char c: allowed.toCharArray()){
+            bitSet.set(c-'a');
+        }
+        for (String word: words){
+            for (char c: word.toCharArray()){
+                if (!bitSet.get(c-'a')){
+                    result--;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }

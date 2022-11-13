@@ -2,6 +2,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -114,5 +115,22 @@ public class SolutionTest {
         assertEquals("ffff", solution.longestPalindrome("ffff"));
         assertEquals("a", solution.longestPalindrome("a"));
         assertEquals("ccc", solution.longestPalindrome("acccb"));
+    }
+
+    @Test
+    public void countConsistentStrings() {
+        assertEquals(2, solution.countConsistentStrings("ab", new String[]{"ad","bd","aaab","baa","badab"}));
+        assertEquals(7, solution.countConsistentStrings("abc", new String[]{"a","b","c","ab","ac","bc","abc"}));
+        assertEquals(4, solution.countConsistentStrings("cad", new String[]{"cc","acd","b","ba","bac","bad","ac","d"}));
+    }
+
+    @Test
+    public void test(){
+        BitSet bitSet = new BitSet();
+        bitSet.set(3);
+        bitSet.set(7);
+        bitSet.set(9);
+        bitSet.set(13);
+        System.out.println(bitSet.length());
     }
 }
