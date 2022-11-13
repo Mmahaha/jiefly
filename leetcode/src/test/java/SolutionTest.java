@@ -133,4 +133,10 @@ public class SolutionTest {
         bitSet.set(13);
         System.out.println(bitSet.length());
     }
+
+    @Test
+    public void customSortString() {
+        assertEquals("cbad", solution.customSortString("cba", "abcd"));
+        assertEquals("cbad", solution.customSortString("cbafg", "abcd"));
+    }
 }

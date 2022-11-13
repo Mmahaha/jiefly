@@ -311,4 +311,19 @@ public class Solution {
         }
         return result;
     }
+
+    // 791. 自定义字符串排序    todo优化
+    public String customSortString(String order, String s) {
+        Map<Character, Integer> sortSeq = new HashMap<>(26);
+        int index = 0;
+        for (char c: order.toCharArray()){
+            sortSeq.put(c, index++);
+        }
+        index = 0;
+        char[] result = new char[s.length()];
+        for(Character c: s.chars().mapToObj(i -> (char) i).sorted(Comparator.comparingInt(ss->sortSeq.getOrDefault(ss, 999))).toArray(Character[]::new)){
+            result[index++] = c;
+        }
+        return new String(result);
+    }
 }
