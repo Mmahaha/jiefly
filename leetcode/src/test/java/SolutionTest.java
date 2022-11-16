@@ -139,4 +139,10 @@ public class SolutionTest {
         assertEquals("cbad", solution.customSortString("cba", "abcd"));
         assertEquals("cbad", solution.customSortString("cbafg", "abcd"));
     }
+
+    @Test
+    public void subset() {
+        assertTrue(solution.subset(new int[]{3, 34, 4, 12, 5, 2},5, 9));
+        assertFalse(solution.subset(new int[]{3, 34, 4, 12, 5, 2},5, 13));
+    }
 }

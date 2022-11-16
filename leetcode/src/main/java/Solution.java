@@ -326,4 +326,23 @@ public class Solution {
         }
         return new String(result);
     }
+
+    /**
+     * 练习题：给定一个数组，判断数组中是否存在和为给定值的数
+     * @param array 数组
+     * @param i 范围[0,i]
+     * @param sum   存在和为sum的值
+     * @return  是否存在
+     */
+    public boolean subset(int[] array, int i, int sum){
+        if (sum == 0){
+            return true;
+        } else if (i == 0) {
+            return array[0] == sum;
+        } else if (array[i] > sum){
+            return subset(array, i-1, sum);
+        } else {
+            return subset(array, i-1, sum) || subset(array, i-1, sum-array[i]);
+        }
+    }
 }
