@@ -345,4 +345,22 @@ public class Solution {
             return subset(array, i-1, sum) || subset(array, i-1, sum-array[i]);
         }
     }
+
+    /**
+     * 775. 全局倒置与局部倒置
+     */
+    public boolean isIdealPermutation(int[] nums) {
+        if (nums.length < 3){
+            return true;
+        }
+        int max = -1;
+        int p1 = -1, p2 = 1;
+        while(++p1 < nums.length && ++p2 < nums.length){
+            max = Math.max(max, nums[p1]);
+            if (nums[p2] < max){
+                return false;
+            }
+        }
+        return true;
+    }
 }

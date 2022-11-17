@@ -145,4 +145,12 @@ public class SolutionTest {
         assertTrue(solution.subset(new int[]{3, 34, 4, 12, 5, 2},5, 9));
         assertFalse(solution.subset(new int[]{3, 34, 4, 12, 5, 2},5, 13));
     }
+
+    @Test
+    public void isIdealPermutation() {
+        assertTrue(solution.isIdealPermutation(new int[]{1,0,2}));
+        assertFalse(solution.isIdealPermutation(new int[]{1,2,0}));
+        assertTrue(solution.isIdealPermutation(new int[]{1,2,3}));
+        assertFalse(solution.isIdealPermutation(new int[]{2,3,1}));
+    }
 }
