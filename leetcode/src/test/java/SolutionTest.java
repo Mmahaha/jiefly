@@ -152,4 +152,11 @@ public class SolutionTest {
         assertEquals(3, solution.numMatchingSubseq("abcde", new String[]{"a","bb","acd","ace"}));
         assertEquals(2, solution.numMatchingSubseq("dsahjpjauf", new String[]{"ahjpjau","ja","ahbwzgqnuk","tnmlanowax"}));
     }
+
+
+    @Test
+    public void largestAltitude() {
+        assertEquals(1, solution.largestAltitude(new int[]{-5, 1, 5, 0, -7}));
+        assertEquals(0, solution.largestAltitude(new int[]{0,-4,-7,-9,-10,-6,-3,-1}));
+    }
 }

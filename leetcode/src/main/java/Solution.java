@@ -410,4 +410,14 @@ public class Solution {
         }
         return result;
     }
+
+    // 1732. 找到最高海拔
+    public int largestAltitude(int[] gain) {
+        int result = 0, currentAltitude = 0;
+        for (int subtract: gain){
+            currentAltitude += subtract;
+            result = Math.max(currentAltitude, result);
+        }
+        return result;
+    }
 }
