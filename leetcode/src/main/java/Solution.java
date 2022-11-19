@@ -363,4 +363,51 @@ public class Solution {
         }
         return true;
     }
+
+    @SuppressWarnings("unchecked")
+    // 792. 匹配子序列的单词数
+    public int numMatchingSubseq(String s, String[] words) {
+        Queue<Integer>[] queueArray = new LinkedList[26];
+        Iterator<Integer>[] iteratorBuf = new Iterator[26];
+        int result = 0, last;
+        Integer headBuf = -1;
+        int index = 1;
+        for (char c : s.toCharArray()) {
+            if (queueArray[c - 'a'] == null) {
+                Queue<Integer> queue = new LinkedList<>();
+                queueArray[c - 'a'] = queue;
+            }
+            queueArray[c - 'a'].offer(index++);
+        }
+
+        outer:
+        for (String word : words) {
+            for (int i = 0; i < 26; i++) {
+                iteratorBuf[i] = null;
+            }
+            last = -1;
+            for (char c : word.toCharArray()) {
+                if (iteratorBuf[c-'a'] == null){
+                    if (queueArray[c-'a'] == null){
+                        continue outer;
+                    }
+                    iteratorBuf[c-'a'] = queueArray[c-'a'].iterator();
+                }
+                Iterator<Integer> iterator = iteratorBuf[c - 'a'];
+                if (!iterator.hasNext()){
+                    continue outer;
+                }
+                //noinspection StatementWithEmptyBody
+                while (iterator.hasNext() && (headBuf = iterator.next()) < last){
+                }
+                if (headBuf < last){
+                    continue outer;
+                }
+                last = headBuf;
+            }
+            System.out.println(word);
+            result ++;
+        }
+        return result;
+    }
 }

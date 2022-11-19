@@ -1,6 +1,7 @@
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
@@ -124,15 +125,6 @@ public class SolutionTest {
         assertEquals(4, solution.countConsistentStrings("cad", new String[]{"cc","acd","b","ba","bac","bad","ac","d"}));
     }
 
-    @Test
-    public void test(){
-        BitSet bitSet = new BitSet();
-        bitSet.set(3);
-        bitSet.set(7);
-        bitSet.set(9);
-        bitSet.set(13);
-        System.out.println(bitSet.length());
-    }
 
     @Test
     public void customSortString() {
@@ -152,5 +144,12 @@ public class SolutionTest {
         assertFalse(solution.isIdealPermutation(new int[]{1,2,0}));
         assertTrue(solution.isIdealPermutation(new int[]{1,2,3}));
         assertFalse(solution.isIdealPermutation(new int[]{2,3,1}));
+    }
+
+
+    @Test
+    public void numMatchingSubseq() {
+        assertEquals(3, solution.numMatchingSubseq("abcde", new String[]{"a","bb","acd","ace"}));
+        assertEquals(2, solution.numMatchingSubseq("dsahjpjauf", new String[]{"ahjpjau","ja","ahbwzgqnuk","tnmlanowax"}));
     }
 }
