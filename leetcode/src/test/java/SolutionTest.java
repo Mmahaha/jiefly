@@ -159,4 +159,10 @@ public class SolutionTest {
         assertEquals(1, solution.largestAltitude(new int[]{-5, 1, 5, 0, -7}));
         assertEquals(0, solution.largestAltitude(new int[]{0,-4,-7,-9,-10,-6,-3,-1}));
     }
+
+
+    @Test
+    public void champagneTower() {
+        System.out.println(solution.champagneTower(4,2,0));
+    }
 }
