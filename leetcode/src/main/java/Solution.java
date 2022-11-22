@@ -450,5 +450,24 @@ public class Solution {
         return result.divideAndRemainder(mod)[1].intValue();
     }
 
-
+    // 808. 分汤
+    public double soupServings(int n) {
+        if(n > 4450) {
+            return 1;
+        }
+        n = (int) Math.ceil(n / 25d);
+        // dp[x][y]表示A杯剩余x份，B份剩余y份的答案
+        double[][] dp = new double[n+1][n+1];
+        dp[0][0] = 0.5;   // 同时分完 0 + 1/2
+        for (int i = 1; i <= n; i++) {
+            dp[0][i] = 1;   // A为0了，此时A必定先分完
+        }
+        // 状态转移公式 dp[a][b] = 0.25*(dp[a-4][b]+dp[a-3][b-1]+dp[a-2][b-2]+dp[a-1][b-3])
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = 0.25 * (dp[Math.max(0, i-4)][j] + dp[Math.max(0, i-3)][j-1] + dp[Math.max(0, i-2)][Math.max(0, j-2)] + dp[Math.max(0, i-1)][Math.max(0, j-3)]);
+            }
+        }
+        return dp[n][n];
+    }
 }
