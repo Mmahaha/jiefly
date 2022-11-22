@@ -1,7 +1,9 @@
 import com.google.common.collect.ImmutableMap;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -432,5 +434,21 @@ public class Solution {
         }
         return Math.min(1,dp[query_row][query_glass + 1]);
     }
+
+    // 891. 子序列宽度之和
+    public int sumSubseqWidths(int[] nums) {
+        Arrays.sort(nums);
+        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal mod = BigDecimal.valueOf(1e9 + 7);
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                BigDecimal sub = new BigDecimal(nums[j] - nums[i]);
+                BigDecimal pow = BigDecimal.valueOf(Math.pow(2, j - i - 1));
+                result = result.add(pow.multiply(sub));
+            }
+        }
+        return result.divideAndRemainder(mod)[1].intValue();
+    }
+
 
 }
