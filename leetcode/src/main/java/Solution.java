@@ -470,4 +470,21 @@ public class Solution {
         }
         return dp[n][n];
     }
+
+    // 1742. 盒子中小球的最大数量
+    public int countBalls(int lowLimit, int highLimit) {
+        int[] bucket = new int[46];
+        int bufI;
+        for (int i = lowLimit; i <= highLimit; i++) {
+            bufI = i;
+            int result = 0;
+            while (bufI > 0) {
+                result += bufI % 10;
+                bufI /= 10;
+            }
+            bucket[result]++;
+        }
+        return IntStream.of(bucket).max().getAsInt();
+    }
 }
+

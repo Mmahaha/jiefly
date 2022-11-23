@@ -177,4 +177,11 @@ public class SolutionTest {
     public void soupServings() {
         assertEquals(0.625, solution.soupServings(50), 0);
     }
+
+    @Test
+    public void countBalls() {
+        assertEquals(2, solution.countBalls(1, 10));
+        assertEquals(2, solution.countBalls(5, 15));
+        assertEquals(2, solution.countBalls(19, 28));
+    }
 }

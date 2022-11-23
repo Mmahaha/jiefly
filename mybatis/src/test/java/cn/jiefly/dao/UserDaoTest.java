@@ -18,7 +18,6 @@ public class UserDaoTest {
         List<Person> personList = userDao.getUsers();
         logger.error("selectlalala" + personList.toString());
         sqlSession.close();
-        Calendar.getInstance()
     }
 
     @Test
