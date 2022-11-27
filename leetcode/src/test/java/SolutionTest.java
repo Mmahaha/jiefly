@@ -184,4 +184,11 @@ public class SolutionTest {
         assertEquals(2, solution.countBalls(5, 15));
         assertEquals(2, solution.countBalls(19, 28));
     }
+
+    @Test
+    public void numSubarrayBoundedMax() {
+        assertEquals(3, solution.numSubarrayBoundedMax(new int[]{2,1,4,3}, 2, 3));
+        assertEquals(7, solution.numSubarrayBoundedMax(new int[]{2,9,2,5,6}, 2, 8));
+        assertEquals(15, solution.numSubarrayBoundedMax(new int[]{40,63,99,87,3,86,81,94,85,45}, 11, 93));
+    }
 }

@@ -3,6 +3,8 @@ import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -486,5 +488,35 @@ public class Solution {
         }
         return IntStream.of(bucket).max().getAsInt();
     }
+
+    // 795. 区间子数组个数，写复杂了
+    public int numSubarrayBoundedMax(int[] nums, int left, int right) {
+        BiFunction<Map<Integer, Integer>, Integer, Integer> calculateAndClear = (map, index) -> {
+            int result = 0;
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                result += (index - entry.getKey()) * entry.getValue();
+            }
+            map.clear();
+            return result;
+        };
+        Map<Integer, Integer> index2Times = new HashMap<>(16);
+        int times = 1;
+        int i;
+        int result = 0;
+        for (i = 0; i < nums.length; i++) {
+            if (nums[i] < left){
+                times ++;
+            } else if (nums[i] >= left && nums[i] <= right){
+                index2Times.put(i, times);
+                times = 1;
+            } else if (nums[i] > right){
+                result += calculateAndClear.apply(index2Times, i);
+                times = 1;
+            }
+        }
+        result += calculateAndClear.apply(index2Times, i);
+        return result;
+    }
+
 }
 
