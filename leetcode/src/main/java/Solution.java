@@ -518,5 +518,34 @@ public class Solution {
         return result;
     }
 
+    // 809. 情感丰富的文字
+    public int expressiveWords(String s, String[] words) {
+        int count1, count2, p1, p2, result = 0;
+        for (String word : words) {
+            p1 = -1; p2 = -1;
+            while (++p1 < s.length() & ++p2 < word.length()){
+                if (s.charAt(p1) != word.charAt(p2)){
+                    break;
+                }
+                count1 = 1; count2 = 1;
+                while (p1+1 < s.length() && s.charAt(p1) == s.charAt(p1+1)){
+                    p1++;
+                    count1++;
+                }
+                while (p2+1 < word.length() && word.charAt(p2) == word.charAt(p2+1)){
+                    p2++;
+                    count2++;
+                }
+                if (count1 < count2 || (count1 > count2 && count1 < 3)){
+                    break;
+                }
+            }
+            if (p1 == s.length() && p2 == word.length()){
+                result++;
+            }
+        }
+        return result;
+    }
+
 }
 

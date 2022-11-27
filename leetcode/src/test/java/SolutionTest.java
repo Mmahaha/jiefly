@@ -191,4 +191,11 @@ public class SolutionTest {
         assertEquals(7, solution.numSubarrayBoundedMax(new int[]{2,9,2,5,6}, 2, 8));
         assertEquals(15, solution.numSubarrayBoundedMax(new int[]{40,63,99,87,3,86,81,94,85,45}, 11, 93));
     }
+
+    @Test
+    public void expressiveWords() {
+        assertEquals(1, solution.expressiveWords("heeellooo", new String[]{"hello", "hi","helo"}));
+        assertEquals(0, solution.expressiveWords("hello", new String[]{"hella"}));
+        assertEquals(1, solution.expressiveWords("a", new String[]{"a"}));
+    }
 }
