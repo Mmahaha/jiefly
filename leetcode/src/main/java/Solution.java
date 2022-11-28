@@ -547,5 +547,22 @@ public class Solution {
         return result;
     }
 
+    // 1752.检查数组是否经排序和轮转得到
+    public boolean check(int[] nums) {
+        if (nums.length <= 2){
+            return true;
+        }
+        boolean alreadyIncrease = false;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i+1]){
+                if (alreadyIncrease){
+                    return false;
+                } else {
+                    alreadyIncrease = true;
+                }
+            }
+        }
+        return nums[0] >= nums[nums.length-1] || !alreadyIncrease;
+    }
 }
 

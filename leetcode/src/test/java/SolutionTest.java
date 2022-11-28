@@ -198,4 +198,14 @@ public class SolutionTest {
         assertEquals(0, solution.expressiveWords("hello", new String[]{"hella"}));
         assertEquals(1, solution.expressiveWords("a", new String[]{"a"}));
     }
+
+    @Test
+    public void check() {
+        assertTrue(solution.check(new int[]{3,4,5,1,2}));
+        assertTrue(solution.check(new int[]{3,4,5,6,7}));
+        assertTrue(solution.check(new int[]{3,3,3,3}));
+        assertTrue(solution.check(new int[]{1}));
+        assertFalse(solution.check(new int[]{3,2,1}));
+        assertFalse(solution.check(new int[]{2,1,3,4}));
+    }
 }
