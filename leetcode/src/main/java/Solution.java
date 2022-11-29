@@ -564,5 +564,19 @@ public class Solution {
         }
         return nums[0] >= nums[nums.length-1] || !alreadyIncrease;
     }
+
+    // 1758. 生成交替二进制字符串的最少操作数
+    public int minOperations(String s) {
+        Function<Character,Character> flip = c ->  c=='1'?'0':'1';
+        char head = '0';
+        int result = 0;
+        for (char c : s.toCharArray()) {
+            if (c == head){
+                result++;
+            }
+            head = flip.apply(head);
+        }
+        return Math.min(result, s.length() - result);
+    }
 }
 

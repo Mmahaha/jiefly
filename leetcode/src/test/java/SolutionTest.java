@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -207,5 +209,12 @@ public class SolutionTest {
         assertTrue(solution.check(new int[]{1}));
         assertFalse(solution.check(new int[]{3,2,1}));
         assertFalse(solution.check(new int[]{2,1,3,4}));
+    }
+
+    @Test
+    public void minOperations() {
+        assertEquals(1, solution.minOperations("0100"));
+        assertEquals(0, solution.minOperations("01"));
+        assertEquals(2, solution.minOperations("1111"));
     }
 }
