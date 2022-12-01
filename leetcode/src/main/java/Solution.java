@@ -578,5 +578,33 @@ public class Solution {
         }
         return Math.min(result, s.length() - result);
     }
+
+    // 895. 最大频率栈
+    @SuppressWarnings({"InnerClassMayBeStatic", "unchecked"})
+    class FreqStack {
+        LinkedList<Integer>[] detail = new LinkedList[2*(int)1e4];
+        Map<Integer,Integer> frequency = new HashMap<>(20000);
+
+        int maxTimes = 0;
+        public FreqStack() {
+
+        }
+
+        public void push(int val) {
+            Integer times = frequency.compute(val, (k, v) -> v == null ? 1 : v + 1);
+            if (detail[times] == null){
+                detail[times] = new LinkedList<>();
+            }
+            detail[times].addLast(val);
+            maxTimes = Math.max(maxTimes, times);
+        }
+
+        public int pop() {
+            Integer result = detail[maxTimes].removeLast();
+            frequency.compute(result, (k,v) -> v - 1);
+            maxTimes = detail[maxTimes].isEmpty() ? maxTimes - 1 : maxTimes;
+            return result;
+        }
+    }
 }
 
