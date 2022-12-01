@@ -232,4 +232,11 @@ public class SolutionTest {
         assertEquals(5, freqStack.pop());
         assertEquals(4, freqStack.pop());
     }
+
+    @Test
+    public void nearestValidPoint() {
+        assertEquals(2, solution.nearestValidPoint(3,4, new int[][]{{1,2},{3,1},{2,4},{2,3},{4,4}}));
+        assertEquals(0, solution.nearestValidPoint(3,4, new int[][]{{3,4}}));
+        assertEquals(-1, solution.nearestValidPoint(3,4, new int[][]{{2,3}}));
+    }
 }

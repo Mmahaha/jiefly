@@ -601,10 +601,28 @@ public class Solution {
 
         public int pop() {
             Integer result = detail[maxTimes].removeLast();
-            frequency.compute(result, (k,v) -> v - 1);
+            frequency.compute(result, (k,v) -> Objects.requireNonNull(v) - 1);
             maxTimes = detail[maxTimes].isEmpty() ? maxTimes - 1 : maxTimes;
             return result;
         }
+    }
+
+    // 1779. 找到最近的有相同 X 或 Y 坐标的点
+    public int nearestValidPoint(int x, int y, int[][] points) {
+        int availableIndex = -1;
+        int minimumDistance = Integer.MAX_VALUE;
+        int currentDistance;
+        int curIndex = 0;
+        for (int[] point : points) {
+            int m = point[0];
+            int n = point[1];
+            if ((m == x || n == y) && ((currentDistance=Math.abs(m-x)+Math.abs(n-y)) < minimumDistance)){
+                availableIndex = curIndex;
+                minimumDistance = currentDistance;
+            }
+            curIndex++;
+        }
+        return availableIndex;
     }
 }
 
