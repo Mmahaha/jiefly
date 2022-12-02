@@ -624,5 +624,19 @@ public class Solution {
         }
         return availableIndex;
     }
+
+    // 1769. 移动所有球到每个盒子所需的最小操作数
+    public int[] minOperations2(String boxes) {
+        char[] chars = boxes.toCharArray();
+        int[] result = new int[chars.length];
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '1'){
+                for (int i1 = 0; i1 < result.length; i1++) {
+                    result[i1] += Math.abs(i - i1);
+                }
+            }
+        }
+        return result;
+    }
 }
 

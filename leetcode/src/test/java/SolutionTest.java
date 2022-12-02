@@ -239,4 +239,12 @@ public class SolutionTest {
         assertEquals(0, solution.nearestValidPoint(3,4, new int[][]{{3,4}}));
         assertEquals(-1, solution.nearestValidPoint(3,4, new int[][]{{2,3}}));
     }
+
+    @Test
+    public void testMinOperations() {
+        assertArrayEquals(new int[]{1,1,3}, solution.minOperations2("110"));
+        assertArrayEquals(new int[]{11,8,5,4,3,4}, solution.minOperations2("001011"));
+        assertArrayEquals(new int[]{0}, solution.minOperations2("1"));
+        assertArrayEquals(new int[]{0}, solution.minOperations2("1"));
+    }
 }
