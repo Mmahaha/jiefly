@@ -638,5 +638,23 @@ public class Solution {
         }
         return result;
     }
+
+    // 1796. 字符串中第二大的数字
+    public int secondHighest(String s) {
+        int secondHighest = -1;
+        int firstHighest = -1;
+        int cur;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)){
+                if ((cur = c-'0') > firstHighest){
+                    secondHighest = firstHighest;
+                    firstHighest = cur;
+                } else if (cur > secondHighest && cur != firstHighest) {
+                    secondHighest = cur;
+                }
+            }
+        }
+        return secondHighest;
+    }
 }
 

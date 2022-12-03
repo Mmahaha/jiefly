@@ -247,4 +247,11 @@ public class SolutionTest {
         assertArrayEquals(new int[]{0}, solution.minOperations2("1"));
         assertArrayEquals(new int[]{0}, solution.minOperations2("1"));
     }
+
+    @Test
+    public void secondHighest() {
+        assertEquals(2, solution.secondHighest("dfa12321afd"));
+        assertEquals(-1, solution.secondHighest("abc1111"));
+        assertEquals(-1, solution.secondHighest("aa"));
+    }
 }
