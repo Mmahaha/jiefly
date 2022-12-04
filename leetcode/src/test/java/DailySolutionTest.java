@@ -1,24 +1,15 @@
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static org.junit.Assert.*;
 
-public class SolutionTest {
+public class DailySolutionTest {
 
-    static Solution solution;
+    static DailySolution solution;
 
     @BeforeClass
     public static void beforeClass() {
-        solution = new Solution();
+        solution = new DailySolution();
     }
 
     @Test
@@ -220,7 +211,7 @@ public class SolutionTest {
 
     @Test
     public void testFreqStack() {
-        Solution.FreqStack freqStack = solution.new FreqStack();
+        DailySolution.FreqStack freqStack = solution.new FreqStack();
         freqStack.push(5);
         freqStack.push(7);
         freqStack.push(5);
