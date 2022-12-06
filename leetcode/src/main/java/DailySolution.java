@@ -656,6 +656,7 @@ public class DailySolution {
     // 1774. 最接近目标价格的甜点成本
     public int closestCost(int[] baseCosts, int[] toppingCosts, int target) {
         // 获取基料的最小值
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
         int x = Arrays.stream(baseCosts).min().getAsInt();
 
         // 进行特判
@@ -708,6 +709,29 @@ public class DailySolution {
         }
         // 若在范围内没找到比 target 小的，就返回“成本相对较低的”的 比 target 大的情况
         return res;
+    }
+
+    // 1805. 字符串中不同整数的数目
+    public int numDifferentIntegers(String word) {
+        Set<String> result = new HashSet<>();
+        StringBuilder builderBuf = new StringBuilder();
+        int i = -1;
+        char current;
+        while (i < word.length() - 1){
+            if (Character.isDigit(word.charAt(++i))){
+                boolean isZero = true;
+                while (i < word.length() && Character.isDigit(current = word.charAt(i))){
+                    if (!(isZero && current == '0')){
+                        isZero = false;
+                        builderBuf.append(current);
+                    }
+                    i++;
+                }
+                result.add(isZero ? "0" : builderBuf.toString());
+                builderBuf.delete(0, builderBuf.length());
+            }
+        }
+        return result.size();
     }
 }
 

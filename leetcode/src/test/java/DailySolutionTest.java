@@ -245,4 +245,13 @@ public class DailySolutionTest {
         assertEquals(-1, solution.secondHighest("abc1111"));
         assertEquals(-1, solution.secondHighest("aa"));
     }
+
+    @Test
+    public void numDifferentIntegers() {
+        assertEquals(3, solution.numDifferentIntegers("a123bc34d8ef34"));
+        assertEquals(2, solution.numDifferentIntegers("leet1234code234"));
+        assertEquals(1, solution.numDifferentIntegers("a1b01c001"));
+        assertEquals(1, solution.numDifferentIntegers("a1a"));
+        assertEquals(2, solution.numDifferentIntegers("1a2"));
+    }
 }
