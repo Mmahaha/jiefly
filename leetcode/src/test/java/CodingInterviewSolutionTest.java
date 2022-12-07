@@ -23,4 +23,9 @@ public class CodingInterviewSolutionTest {
         assertTrue(solution.findNumberIn2DArray(JUtils.resolveString("[[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]"), 5));
         assertFalse(solution.findNumberIn2DArray(JUtils.resolveString("[[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]"), 20));
     }
+
+    @Test
+    public void replaceSpace() {
+        assertEquals("We%20are%20happy.", solution.replaceSpace("We are happy."));
+    }
 }

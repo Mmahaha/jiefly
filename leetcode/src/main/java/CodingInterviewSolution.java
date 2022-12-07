@@ -41,4 +41,17 @@ public class CodingInterviewSolution {
         return false;
     }
 
+    // 剑指 Offer 05. 替换空格，C++可以直接改原字符串（从后往前赋值），Java只能开一个新字符串了
+    public String replaceSpace(String s) {
+        StringBuilder result = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == ' '){
+                result.append("%20");
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+
 }
