@@ -1,3 +1,7 @@
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 剑指offer题库
  */
@@ -52,6 +56,27 @@ public class CodingInterviewSolution {
             }
         }
         return result.toString();
+    }
+
+    // 剑指 Offer 06. 从尾到头打印链表
+    public int[] reversePrint(ListNode head) {
+        Deque<Integer> stack = new LinkedList<>();
+        int count = 0;
+        for (ListNode p = head; p != null; p = p.next){
+            count++;
+        }
+        int[] result = new int[count];
+        for (int i = count - 1; i >= 0; i--) {
+            result[i] = head.val;
+            head = head.next;
+        }
+        return result;
+    }
+
+    public static class ListNode{
+        int val;
+        ListNode next;
+        ListNode(int x) {val = x;}
     }
 
 }
