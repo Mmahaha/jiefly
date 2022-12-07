@@ -733,5 +733,42 @@ public class DailySolution {
         }
         return result.size();
     }
+
+    // 1775. 通过最少操作次数使数组的和相等
+    public int minOperations(int[] nums1, int[] nums2) {
+        int[] count1 = new int[7];
+        int[] count2 = new int[7];
+        int sum1 = 0, sum2 = 0, result = 0;
+        for (int i : nums1) {
+            count1[i]++;
+            sum1 += i;
+        }
+        for (int i : nums2) {
+            count2[i]++;
+            sum2 += i;
+        }
+        if (sum1 > sum2){
+            int[] temp;
+            temp = count1;
+            count1 = count2;
+            count2 = temp;
+        }
+        int subtract = Math.abs(sum1 - sum2);
+        // count1.sum <= count2.sum
+        for (int i = 1; i <= 6 ; i++) {
+            int basic = 6 - i;
+            // count1增加n个basic或count2减少n个basic
+            int max = count1[i] + count2[7-i];
+            int need = (int) Math.ceil(subtract * 1.0 / basic);
+            if (need <= max){
+                result += need;
+                subtract = 0;
+                break;
+            }
+            subtract -= basic * max;
+            result += max;
+        }
+        return subtract == 0 ? result : -1;
+    }
 }
 

@@ -254,4 +254,11 @@ public class DailySolutionTest {
         assertEquals(1, solution.numDifferentIntegers("a1a"));
         assertEquals(2, solution.numDifferentIntegers("1a2"));
     }
+
+    @Test
+    public void testMinOperations1() {
+        assertEquals(3, solution.minOperations(new int[]{1,2,3,4,5,6}, new int[]{1,1,2,2,2,2}));
+        assertEquals(-1, solution.minOperations(new int[]{1,1,1,1,1,1,1}, new int[]{6}));
+        assertEquals(3, solution.minOperations(new int[]{6,6}, new int[]{1}));
+    }
 }
