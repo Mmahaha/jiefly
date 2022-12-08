@@ -261,4 +261,10 @@ public class DailySolutionTest {
         assertEquals(-1, solution.minOperations(new int[]{1,1,1,1,1,1,1}, new int[]{6}));
         assertEquals(3, solution.minOperations(new int[]{6,6}, new int[]{1}));
     }
+
+    @Test
+    public void squareIsWhite() {
+        assertFalse(solution.squareIsWhite("a1"));
+        assertTrue(solution.squareIsWhite("h3"));
+    }
 }
