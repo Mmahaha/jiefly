@@ -775,5 +775,15 @@ public class DailySolution {
     public boolean squareIsWhite(String coordinates) {
         return (((coordinates.charAt(0) - 'a') + (coordinates.charAt(1) - '0')) & 1) == 0;
     }
+
+    // 1780. 判断一个数字是否可以表示成三的幂的和
+    public boolean checkPowersOfThree(int n) {
+        for (int i = n; i > 0; i /= 3){
+            if (i % 3 == 2){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 

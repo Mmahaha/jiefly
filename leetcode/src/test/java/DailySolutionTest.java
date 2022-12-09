@@ -267,4 +267,11 @@ public class DailySolutionTest {
         assertFalse(solution.squareIsWhite("a1"));
         assertTrue(solution.squareIsWhite("h3"));
     }
+
+    @Test
+    public void checkPowersOfThree() {
+        assertTrue(solution.checkPowersOfThree(12));
+        assertTrue(solution.checkPowersOfThree(91));
+        assertFalse(solution.checkPowersOfThree(21));
+    }
 }
