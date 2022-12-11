@@ -274,4 +274,11 @@ public class DailySolutionTest {
         assertTrue(solution.checkPowersOfThree(91));
         assertFalse(solution.checkPowersOfThree(21));
     }
+
+    @Test
+    public void testMinOperations2() {
+        assertEquals(3, solution.minOperations(new int[]{1,1,1}));
+        assertEquals(14, solution.minOperations(new int[]{1,5,2,4,1}));
+        assertEquals(0, solution.minOperations(new int[]{8}));
+    }
 }

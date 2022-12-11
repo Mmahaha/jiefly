@@ -785,5 +785,17 @@ public class DailySolution {
         }
         return true;
     }
+
+    // 1827. 最少操作使数组递增
+    public int minOperations(int[] nums) {
+        int result = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i+1] <= nums[i]){
+                result += nums[i] - nums[i+1] + 1;
+                nums[i+1] = nums[i] + 1;
+            }
+        }
+        return result;
+    }
 }
 
