@@ -281,4 +281,11 @@ public class DailySolutionTest {
         assertEquals(14, solution.minOperations(new int[]{1,5,2,4,1}));
         assertEquals(0, solution.minOperations(new int[]{8}));
     }
+
+    @Test
+    public void beautySum() {
+        assertEquals(5, solution.beautySum("aabcb"));
+        assertEquals(17, solution.beautySum("aabcbaa"));
+        assertEquals(0, solution.beautySum("ab"));
+    }
 }

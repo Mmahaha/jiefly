@@ -797,5 +797,25 @@ public class DailySolution {
         }
         return result;
     }
+
+    // 1781. 所有子字符串美丽值之和
+    public int beautySum(String s) {
+        int result = 0;
+        for (int i = 0; i < s.length() - 2; i++) {
+            int[] count = new int[26];
+            for (int j = i; j < s.length(); j++) {
+                int min = Integer.MAX_VALUE, max = 0;
+                count[s.charAt(j) - 'a']++;
+                for (int k = 0; k < 26; k++) {
+                    if (count[k] > 0) {
+                        min = Math.min(min, count[k]);
+                        max = Math.max(max, count[k]);
+                    }
+                }
+                result += max - min;
+            }
+        }
+        return result;
+    }
 }
 
