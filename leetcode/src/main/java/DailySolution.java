@@ -817,5 +817,24 @@ public class DailySolution {
         }
         return result;
     }
+
+    // 1832. 判断句子是否为全字母句
+    public boolean checkIfPangram(String sentence) {
+        if (sentence.length() < 26){
+            return false;
+        }
+        BitSet bitSet = new BitSet(26);
+        int length = 0;
+        for (char c : sentence.toCharArray()) {
+            if (!bitSet.get(c-'a')){
+                bitSet.set(c-'a');
+                length++;
+                if (length == 26){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
 

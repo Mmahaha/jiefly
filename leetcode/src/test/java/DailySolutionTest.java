@@ -1,6 +1,8 @@
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.BitSet;
+
 import static org.junit.Assert.*;
 
 public class DailySolutionTest {
@@ -287,5 +289,11 @@ public class DailySolutionTest {
         assertEquals(5, solution.beautySum("aabcb"));
         assertEquals(17, solution.beautySum("aabcbaa"));
         assertEquals(0, solution.beautySum("ab"));
+    }
+
+    @Test
+    public void checkIfPangram() {
+        assertTrue(solution.checkIfPangram("thequickbrownfoxjumpsoverthelazydog"));
+        assertFalse(solution.checkIfPangram("thequickbrownfoxjumpsoverthelazydoff"));
     }
 }
