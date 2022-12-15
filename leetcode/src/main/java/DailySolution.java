@@ -2,6 +2,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -835,6 +836,15 @@ public class DailySolution {
             }
         }
         return false;
+    }
+
+    // 1945. 字符串转化后的各位数字之和
+    public int getLucky(String s, int k) {
+        String str = s.chars().mapToObj(i -> String.valueOf((i - 96))).collect(Collectors.joining());
+        while (k-- > 0 && str.length() > 1){
+            str = String.valueOf(str.chars().map(i->i-48).sum());
+        }
+        return Integer.parseInt(str);
     }
 }
 

@@ -296,4 +296,10 @@ public class DailySolutionTest {
         assertTrue(solution.checkIfPangram("thequickbrownfoxjumpsoverthelazydog"));
         assertFalse(solution.checkIfPangram("thequickbrownfoxjumpsoverthelazydoff"));
     }
+
+    @Test
+    public void getLucky() {
+        assertEquals(36, solution.getLucky("iiii", 1));
+        assertEquals(6, solution.getLucky("leetcode", 2));
+    }
 }
