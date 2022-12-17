@@ -846,5 +846,15 @@ public class DailySolution {
         }
         return Integer.parseInt(str);
     }
+
+    // 1785. 构成特定和需要添加的最少元素
+    public int minElements(int[] nums, int limit, int goal) {
+        long sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        long subtract = Math.abs((long) goal - sum);
+        return (int) Math.ceil(subtract * 1.0 / limit);
+    }
 }
 

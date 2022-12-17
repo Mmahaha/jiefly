@@ -302,4 +302,9 @@ public class DailySolutionTest {
         assertEquals(36, solution.getLucky("iiii", 1));
         assertEquals(6, solution.getLucky("leetcode", 2));
     }
+
+    @Test
+    public void minElements() {
+        assertEquals(2, solution.minElements(new int[]{1, -1, 1}, 3, -4));
+    }
 }
