@@ -856,5 +856,30 @@ public class DailySolution {
         long subtract = Math.abs((long) goal - sum);
         return (int) Math.ceil(subtract * 1.0 / limit);
     }
+
+    // 1764. 通过连接另一个数组的子数组得到一个数组
+    public boolean canChoose(int[][] groups, int[] nums) {
+        return true;
+    }
+
+    // 1653. 使字符串平衡的最少删除次数
+    public int minimumDeletions(String s) {
+        int leftB = 0, rightA = 0;
+        for (char c : s.toCharArray()) {
+            if (c == 'a') {
+                rightA++;
+            }
+        }
+        int result = rightA;
+        for (char c : s.toCharArray()) {
+            if (c == 'b') {
+                leftB++;
+            } else {
+                rightA--;
+            }
+            result = Math.min(result, leftB + rightA);
+        }
+        return result;
+    }
 }
 

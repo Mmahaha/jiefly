@@ -307,4 +307,13 @@ public class DailySolutionTest {
     public void minElements() {
         assertEquals(2, solution.minElements(new int[]{1, -1, 1}, 3, -4));
     }
+
+    @Test
+    public void minimumDeletions() {
+        assertEquals(2, solution.minimumDeletions("aababbab"));
+        assertEquals(2, solution.minimumDeletions("bbaaaaabb"));
+        assertEquals(0, solution.minimumDeletions("aaa"));
+        assertEquals(0, solution.minimumDeletions("bbb"));
+        assertEquals(0, solution.minimumDeletions("aaabbb"));
+    }
 }
