@@ -316,4 +316,11 @@ public class DailySolutionTest {
         assertEquals(0, solution.minimumDeletions("bbb"));
         assertEquals(0, solution.minimumDeletions("aaabbb"));
     }
+
+    @Test
+    public void maxValue() {
+        assertEquals(12, solution.maxValue(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        assertEquals(3, solution.maxValue(new int[][]{{3}}));
+        assertEquals(9, solution.maxValue(new int[][]{{1,2,5},{3,2,1}}));
+    }
 }
