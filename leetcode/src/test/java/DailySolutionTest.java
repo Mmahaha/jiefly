@@ -1,6 +1,8 @@
 import org.junit.BeforeClass;
 import org.junit.Test;
+import util.JUtils;
 
+import java.util.Arrays;
 import java.util.BitSet;
 
 import static org.junit.Assert.*;
@@ -322,5 +324,12 @@ public class DailySolutionTest {
         assertEquals(12, solution.maxValue(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
         assertEquals(3, solution.maxValue(new int[][]{{3}}));
         assertEquals(9, solution.maxValue(new int[][]{{1,2,5},{3,2,1}}));
+    }
+
+    @Test
+    public void restoreMatrix() {
+        System.out.println(Arrays.deepToString(solution.restoreMatrix(new int[]{5, 7, 10}, new int[]{8, 6, 8})));
+        System.out.println(Arrays.deepToString(solution.restoreMatrix(new int[]{0}, new int[]{0})));
+        System.out.println(Arrays.deepToString(solution.restoreMatrix(new int[]{3,8}, new int[]{4,7})));
     }
 }
