@@ -332,4 +332,10 @@ public class DailySolutionTest {
         System.out.println(Arrays.deepToString(solution.restoreMatrix(new int[]{0}, new int[]{0})));
         System.out.println(Arrays.deepToString(solution.restoreMatrix(new int[]{3,8}, new int[]{4,7})));
     }
+
+    @Test
+    public void smallestEvenMultiple() {
+        assertEquals(solution.smallestEvenMultiple(5), 10);
+        assertEquals(solution.smallestEvenMultiple(6), 6);
+    }
 }

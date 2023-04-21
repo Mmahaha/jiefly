@@ -929,5 +929,13 @@ public class DailySolution {
         }
         return result;
     }
+
+    // 2413. 最小偶倍数
+    public int smallestEvenMultiple(int n) {
+        if ((n & 1) == 1) {
+            return n * 2;
+        }
+        return n;
+    }
 }
 
