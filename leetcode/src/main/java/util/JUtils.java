@@ -41,4 +41,10 @@ public class JUtils {
         }
         return result.toArray(new int[0][0]);
     }
+
+    public static void swap(int[] array, int x, int y) {
+        int buf = array[x];
+        array[x] = array[y];
+        array[y] = buf;
+    }
 }
