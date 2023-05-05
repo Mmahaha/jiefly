@@ -52,19 +52,57 @@ public interface ISort {
             }
         }
 
+
         private int partition(int[] array, int l, int r) {
-            int split = array[l];
+            int x = array[(l + r) >> 1];
             int i = l - 1;
             int j = r + 1;
             while (true) {
-                while (array[--j] > split) ;
-                while (array[++i] < split) ;
+                while (array[--j] > x) ;
+                while (array[++i] < x) ;
                 if (i < j) {
                     swap(array, i, j);
                 } else {
                     return j;
                 }
             }
+        }
+    }
+
+    class MergeSort implements ISort {
+        @Override
+        public void sort(int[] array) {
+            mergeSort(array, 0, array.length - 1);
+        }
+
+        public void mergeSort(int[] array, int l, int r) {
+            if (l == r) {
+                return;
+            }
+            int m = (r + l) >> 1;
+            mergeSort(array, l, m);
+            mergeSort(array, m + 1, r);
+            merge(array, l, r, m);
+        }
+
+        private void merge(int[] array, int l, int r, int m) {
+            int p1 = l, p2 = m + 1, i = 0;
+            int size = r - l + 1;
+            int[] arraySort = new int[size];
+            while (p1 <= m && p2 <= r) {
+                if (array[p1] < array[p2]) {
+                    arraySort[i++] = array[p1++];
+                } else {
+                    arraySort[i++] = array[p2++];
+                }
+            }
+            while (p1 <= m) {
+                arraySort[i++] = array[p1++];
+            }
+            while (p2 <= r) {
+                arraySort[i++] = array[p2++];
+            }
+            System.arraycopy(arraySort, 0, array, l, size);
         }
     }
 }
