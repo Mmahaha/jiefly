@@ -105,4 +105,37 @@ public interface ISort {
             System.arraycopy(arraySort, 0, array, l, size);
         }
     }
+
+    class HeapSort implements ISort {
+        @Override
+        public void sort(int[] array) {
+            int n = array.length;
+            for (int i = n /2 - 1; i >= 0; i--) {
+                heapify(array, i, n);
+            }
+            while (--n >= 0) {
+                swap(array, 0, n);
+                heapify(array, 0, n);
+            }
+        }
+
+        /**
+         * n长度下对i位置下沉处理
+         */
+        public void heapify(int[] array, int i, int n) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int max = i;
+            if (left < n && array[left] > array[max]) {
+                max = left;
+            }
+            if (right < n && array[right] > array[max]) {
+                max = right;
+            }
+            if (max != i) {
+                swap(array, i, max);
+                heapify(array, max, n);
+            }
+        }
+    }
 }
