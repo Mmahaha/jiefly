@@ -12,6 +12,7 @@
         <module>mybatis</module>
         <module>justtest</module>
         <module>leetcode</module>
+        <module>es</module>
     </modules>
 
     <dependencies>
@@ -35,6 +36,22 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.23</version>
         </dependency>
     </dependencies>
 

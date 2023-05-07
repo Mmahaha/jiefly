@@ -1,6 +1,5 @@
 package sort;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class SortTest {
@@ -8,7 +7,7 @@ public class SortTest {
         for (int i = 0; i < 500; i++) {
             int[] array = generateArray();
             long start = System.currentTimeMillis();
-            new ISort.SelectSort().sort(array);
+            new ISort.HeapSort().sort(array);
 //            Arrays.sort(array);
             System.out.println(String.format("cost %sms", System.currentTimeMillis() - start));
             check(array);
@@ -16,7 +15,7 @@ public class SortTest {
     }
 
     static int[] generateArray() {
-        int LENGTH = 1000_0;
+        int LENGTH = 1000_0000;
         int[] result = new int[LENGTH];
         for (int i = 0; i < LENGTH; i++) {
             result[i] = new Random().nextInt(999999999);
