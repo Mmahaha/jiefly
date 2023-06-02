@@ -1,14 +1,12 @@
 package util;
 
+import linkedlist.LinkedListSolution.ListNode;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class JUtils {
     /**
@@ -46,5 +44,28 @@ public class JUtils {
         int buf = array[x];
         array[x] = array[y];
         array[y] = buf;
+    }
+
+    public static ListNode buildListNode(int[] valArray) {
+        ListNode result = null, lastNode = null;
+        for (int val : valArray) {
+            ListNode node = new ListNode(val);
+            result = result == null ? node : result;
+            if (lastNode != null) {lastNode.next = node;}
+            lastNode = node;
+        }
+        return result;
+    }
+
+    public static int[] nodesToArray(ListNode node) {
+        if (node == null) {
+            return new int[0];
+        }
+        LinkedList<Integer> valList = new LinkedList<>();
+        while (node != null) {
+            valList.add(node.val);
+            node = node.next;
+        }
+        return Stream.of(valList.toArray()).mapToInt(i-> (int) i).toArray();
     }
 }
