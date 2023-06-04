@@ -1,7 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
+import util.JUtils;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
 
 public class Hot100SolutionTest {
 
@@ -33,5 +36,41 @@ public class Hot100SolutionTest {
     public void maxArea() {
         assertEquals(49, solution.maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
         assertEquals(1, solution.maxArea(new int[]{1,1}));
+    }
+
+    @Test
+    public void letterCombinations() {
+        System.out.println(solution.letterCombinations("2689"));
+    }
+
+    @Test
+    public void convert() {
+        assertEquals("PAHNAPLSIIGYIR", solution.convert("PAYPALISHIRING", 3));
+        assertEquals("PINALSIGYAHRPI", solution.convert("PAYPALISHIRING", 4));
+        assertEquals("A", solution.convert("A", 1));
+    }
+
+    @Test
+    public void removeNthFromEnd() {
+        assertArrayEquals(new int[]{1,2,3,5}, JUtils.nodesToArray(solution.removeNthFromEnd(JUtils.buildListNode(new int[]{1, 2, 3, 4, 5}), 2)));
+        assertArrayEquals(new int[]{}, JUtils.nodesToArray(solution.removeNthFromEnd(JUtils.buildListNode(new int[]{1}), 1)));
+        assertArrayEquals(new int[]{1}, JUtils.nodesToArray(solution.removeNthFromEnd(JUtils.buildListNode(new int[]{1,2}), 1)));
+    }
+
+    @Test
+    public void isValid() {
+        assertTrue(solution.isValid("()"));
+    }
+
+    @Test
+    public void mergeTwoLists() {
+        assertArrayEquals(new int[]{1,1,2,3,4,4}, JUtils.nodesToArray(solution.mergeTwoLists(JUtils.buildListNode(new int[]{1,2,4}), JUtils.buildListNode(new int[]{1,3,4}))));
+        assertArrayEquals(new int[]{}, JUtils.nodesToArray(solution.mergeTwoLists(JUtils.buildListNode(new int[]{}), JUtils.buildListNode(new int[]{}))));
+        assertArrayEquals(new int[]{0}, JUtils.nodesToArray(solution.mergeTwoLists(JUtils.buildListNode(new int[]{}), JUtils.buildListNode(new int[]{0}))));
+    }
+
+    @Test
+    public void generateParenthesis() {
+        System.out.println(solution.generateParenthesis(4));
     }
 }

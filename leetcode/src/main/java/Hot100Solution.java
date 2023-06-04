@@ -1,4 +1,11 @@
+import linkedlist.LinkedListSolution;
+
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static linkedlist.LinkedListSolution.ListNode;
 
 public class Hot100Solution {
 
@@ -115,7 +122,126 @@ public class Hot100Solution {
     // 17. 电话号码的字母组合
     public List<String> letterCombinations(String digits) {
         Map<Character,List<String>> map = new HashMap<>();
-        return null;
+        if (digits.isEmpty()) {
+            return Collections.emptyList();
+        }
+        map.put('2', Arrays.asList("a","b","c"));map.put('3', Arrays.asList("d","e","f"));
+        map.put('4', Arrays.asList("g","h","i"));map.put('5', Arrays.asList("j","k","l"));
+        map.put('6', Arrays.asList("m","n","o"));map.put('7', Arrays.asList("p","q","r","s"));
+        map.put('8', Arrays.asList("t","u","v"));map.put('9', Arrays.asList("w","x","y","z"));
+        List<String> result = map.get(digits.charAt(0));
+        BiFunction<List<String>,List<String>,List<String>> buildCombinations = (sList1,sList2) ->
+                sList1.stream().flatMap(s1 -> sList2.stream().map(s2 -> s1+s2)).collect(Collectors.toList());
+        for (int i = 1; i < digits.length(); i++) {
+            result = buildCombinations.apply(result, map.get(digits.charAt(i)));
+        }
+        return result;
+    }
+
+    // 6. N 字形变换
+    public String convert(String s, int numRows) {
+        if (numRows == 1) {return s;}
+        StringBuilder result = new StringBuilder();
+        int i = -1, interval = (numRows - 1) * 2;
+        while (++i < numRows && i < s.length()) {
+            result.append(s.charAt(i));
+            buildStr(s, interval - i * 2, i * 2, result, i);
+        }
+        return result.toString();
+    }
+    private void buildStr(String s, int interval1, int interval2, StringBuilder result, int index) {
+        int[] loop = new int[]{interval1, interval2};
+        for (int i = 0; ; i^=1) {
+            int interval = loop[i];
+            if (interval == 0) {continue;}
+            if ((index+=interval) >= s.length()) {break;}
+            result.append(s.charAt(index));
+        }
+    }
+
+    // 19. 删除链表的倒数第 N 个结点
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummyNode = new ListNode(-1, head), quickP = dummyNode, slowP = dummyNode, lastNode = null;
+        while (--n >= 0) {
+            quickP = quickP.next;
+        }
+        while (quickP != null) {
+            quickP = quickP.next;
+            lastNode = slowP;
+            slowP = slowP.next;
+        }
+        lastNode.next = slowP.next;
+        return dummyNode.next;
+    }
+
+    // 20. 有效的括号
+    public boolean isValid(String s) {
+        LinkedList<Character> stack = new LinkedList<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '{' || c == '[' || c == '(') {
+                stack.push(c);
+                continue;
+            }
+            if (c == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+            } else if (c == ']' && !stack.isEmpty() && stack.peek() == '[') {
+                stack.pop();
+            } else if (c == ')' && !stack.isEmpty() && stack.peek() == '(') {
+                stack.pop();
+            } else {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    // 21. 合并两个有序链表，还有递归解法。。妙哉
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummyNode = new ListNode(-1, null), iter1 = list1, iter2 = list2, iter = dummyNode;
+        while (iter1 != null && iter2 != null) {
+            if (iter1.val < iter2.val) {
+                iter.next = iter1;
+                iter1 = iter1.next;
+            } else {
+                iter.next = iter2;
+                iter2 = iter2.next;
+            }
+            iter = iter.next;
+        }
+        while (iter1 != null) {
+            iter.next = iter1;
+            iter1 = iter1.next;
+            iter = iter.next;
+        }
+        while (iter2 != null) {
+            iter.next = iter2;
+            iter2 = iter2.next;
+            iter = iter.next;
+        }
+        return dummyNode.next;
+    }
+
+    // 22. 括号生成
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+        backtrack(0, 0, n, builder, result);
+        return result;
+    }
+
+    private void backtrack(int leftBracketCnt, int rightBracketCnt, int n, StringBuilder builder, List<String> result) {
+        if (leftBracketCnt > n || rightBracketCnt > n || rightBracketCnt > leftBracketCnt) {return;}
+        if (rightBracketCnt == n) {
+            result.add(builder.toString());
+            return;
+        }
+        builder.append('(');
+        backtrack(leftBracketCnt+1, rightBracketCnt, n, builder, result);
+        builder.deleteCharAt(builder.length()-1);
+        builder.append(')');
+        backtrack(leftBracketCnt, rightBracketCnt+1, n, builder, result);
+        builder.deleteCharAt(builder.length()-1);
     }
 
 }
