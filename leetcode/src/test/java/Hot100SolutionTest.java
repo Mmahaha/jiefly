@@ -73,4 +73,12 @@ public class Hot100SolutionTest {
     public void generateParenthesis() {
         System.out.println(solution.generateParenthesis(4));
     }
+
+    @Test
+    public void combinationSum() {
+        System.out.println(solution.combinationSum(new int[]{2, 3, 6, 7}, 4));
+        System.out.println(solution.combinationSum(new int[]{2, 3, 6, 7}, 7));
+        System.out.println(solution.combinationSum(new int[]{2, 3, 5}, 8));
+        System.out.println(solution.combinationSum(new int[]{2}, 1));
+    }
 }

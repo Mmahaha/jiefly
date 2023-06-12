@@ -244,4 +244,27 @@ public class Hot100Solution {
         builder.deleteCharAt(builder.length()-1);
     }
 
+
+    // 39. 组合总和
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Set<List<Integer>> res = new HashSet<>(150);
+        Arrays.sort(candidates);
+        backtrack(res, new LinkedList<>(), candidates, target, 0, 0);
+        return new ArrayList<>(res);
+    }
+
+    private void backtrack(Set<List<Integer>> result, LinkedList<Integer> comb, int[] candidates, int tar, int sum, int startIndex) {
+        if (tar == sum) {
+            ArrayList<Integer> res = new ArrayList<>(comb);
+            result.add(res);
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            if (sum + candidates[i] > tar) {break;}
+            comb.add(candidates[i]);
+            backtrack(result, comb, candidates, tar, sum + candidates[i], i);
+            comb.removeLast();
+        }
+    }
+
 }
