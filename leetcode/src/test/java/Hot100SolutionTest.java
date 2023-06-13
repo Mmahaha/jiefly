@@ -81,4 +81,11 @@ public class Hot100SolutionTest {
         System.out.println(solution.combinationSum(new int[]{2, 3, 5}, 8));
         System.out.println(solution.combinationSum(new int[]{2}, 1));
     }
+
+    @Test
+    public void combinationSum2() {
+        System.out.println(solution.combinationSum2(new int[]{10,1,2,7,6,1,5}, 8));
+        System.out.println(solution.combinationSum2(new int[]{2,5,2,1,2}, 5));
+        System.out.println(solution.combinationSum2(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, 30));
+    }
 }

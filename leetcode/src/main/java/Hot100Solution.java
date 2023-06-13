@@ -267,4 +267,32 @@ public class Hot100Solution {
         }
     }
 
+    // 40. 组合总和 II
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        // 剪数组 todo
+        Set<List<Integer>> result = new HashSet<>(candidates.length);
+        int[] suffixSum = new int[candidates.length + 1];
+        for (int i = candidates.length - 1; i >= 0; i--) {
+            suffixSum[i] = candidates[i] + suffixSum[i+1];
+        }
+        backtrack2(result, new LinkedList<>(), candidates, target, 0, 0, suffixSum);
+        return new ArrayList<>(result);
+    }
+
+    private void backtrack2(Set<List<Integer>> result, LinkedList<Integer> path, int[] candidates, int target, int sum, int startIndex, int[] suffixSum) {
+        if (sum == target) {
+            ArrayList<Integer> res = new ArrayList<>(path);
+            res.sort(Integer::compareTo);
+            result.add(res);
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            if (sum + candidates[i] > target) {break;}
+            if (sum + suffixSum[i] < target) {break;}
+            path.add(candidates[i]);
+            backtrack2(result, path, candidates, target, sum + candidates[i], i + 1, suffixSum);
+            path.removeLast();
+        }
+    }
 }
