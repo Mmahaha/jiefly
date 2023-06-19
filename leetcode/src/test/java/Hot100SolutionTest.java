@@ -86,6 +86,23 @@ public class Hot100SolutionTest {
     public void combinationSum2() {
         System.out.println(solution.combinationSum2(new int[]{10,1,2,7,6,1,5}, 8));
         System.out.println(solution.combinationSum2(new int[]{2,5,2,1,2}, 5));
-        System.out.println(solution.combinationSum2(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, 30));
+        System.out.println(solution.combinationSum2(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,3}, 30));
+    }
+
+    @Test
+    public void climbStairs() {
+        assertEquals(2, solution.climbStairs(2));
+        assertEquals(3, solution.climbStairs(3));
+    }
+
+    @Test
+    public void trans() {
+//        solution.trans("12",2);
+    }
+
+    @Test
+    public void subsets() {
+        System.out.println(solution.subsets(new int[]{1,2,3}));
+        System.out.println(solution.subsets(new int[]{0}));
     }
 }

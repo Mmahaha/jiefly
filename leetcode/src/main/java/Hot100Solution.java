@@ -1,9 +1,11 @@
-import linkedlist.LinkedListSolution;
+import util.JUtils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static linkedlist.LinkedListSolution.ListNode;
 
@@ -267,10 +269,78 @@ public class Hot100Solution {
         }
     }
 
+    // 70. 爬楼梯
+    public int climbStairs(int n) {
+        if (n == 1) {return 1;}
+        if (n == 2) {return 2;}
+        int[] array = new int[n+1];
+        array[1] = 1;
+        array[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            array[i] = array[i-1] + array[i-2];
+        }
+        return array[n];
+    }
+
+    // 78. 子集
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>((int) Math.pow(2, nums.length));
+        backtrack(new LinkedList<>(), result, nums, 0);
+        return result;
+    }
+
+    private void backtrack(LinkedList<Integer> path, List<List<Integer>> res, int[] nums, int startIndex) {
+        res.add(new ArrayList<>(path));
+        for (int i = startIndex; i < nums.length; i++) {
+            path.add(nums[i]);
+            backtrack(path, res, nums, i + 1);
+            path.removeLast();
+        }
+    }
+
+    // 31. 下一个排列
+    public void nextPermutation(int[] nums) {
+        // 1、从右至左找到第一个非降序的元素
+        int tar = -1, i;
+        for (i = nums.length - 1; i >= 1; i--) {
+            if (nums[i] >= nums[i-1]) {
+                tar = nums[i-1];
+            }
+        }
+        if (tar == -1) {
+            int left = 0, right = nums.length - 1;
+            while (left < right) {
+                swap(nums, left++, right--);
+            }
+            return;
+        }
+        // 2、从i开始往右找第一个比他大的
+//        while ()
+    }
+
+    private static void swap(int[] array, int x, int y) {
+        int buf = array[x];
+        array[x] = array[y];
+        array[y] = buf;
+    }
+
     // 40. 组合总和 II
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
-        // 剪数组 todo
+        // 剪数组
+        LinkedList<Integer> processList = IntStream.of(candidates).boxed().collect(Collectors.toCollection(LinkedList::new));
+        Iterator<Integer> iterator = processList.iterator();
+        int sum = 0, lastVal = -1;
+        while (iterator.hasNext()) {
+            Integer val = iterator.next();
+            if (val != lastVal) {
+                sum = val;
+            } else if ((sum += val) > 30) {
+                iterator.remove();
+            }
+            lastVal = val;
+        }
+        candidates = processList.stream().mapToInt(Integer::intValue).toArray();
         Set<List<Integer>> result = new HashSet<>(candidates.length);
         int[] suffixSum = new int[candidates.length + 1];
         for (int i = candidates.length - 1; i >= 0; i--) {
