@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 public class MySolution {
@@ -102,4 +103,107 @@ public class MySolution {
         }
         return -1;
     }
+
+    // 组成最大数
+    public static String makeUpLargestNumber(String numbers) {
+        if (numbers.isEmpty()) {
+            return numbers;
+        }
+        String[] split = numbers.split(",");
+        Arrays.sort(split, (o1, o2) -> {
+            String o1o2 = o1 + o2;
+            String o2o1 = o2 + o1;
+            return -o1o2.compareTo(o2o1);
+        });
+        return String.join("", split);
+    }
+
+    public String longestCommonPostfix (String[] strs) {
+        BinaryOperator<String> func = (s1, s2) -> {
+            StringBuilder res = new StringBuilder();
+            int i = s1.length(), j = s2.length();
+            while (--i >= 0 && --j >= 0) {
+                if (s1.charAt(i) == s2.charAt(j)) {
+                    res.append(s1.charAt(i));
+                } else {
+                    break;
+                }
+            }
+            String result = res.reverse().toString();
+            return result;
+        };
+        String res = Arrays.stream(strs).reduce(func).get();
+        return res.isEmpty() ? "@Zero" : res;
+    }
+
+
+    public Integer[] getPath(TreeNode rootNode, int tar) {
+        return dfs(new LinkedList<>(), rootNode, tar).toArray(new Integer[0]);
+    }
+
+    private List<Integer> dfs(LinkedList<Integer> path, TreeNode cur, int tar) {
+        if (cur == null) {
+            return Collections.emptyList();
+        }
+        path.add(cur.value);
+        if (cur.value == tar) {
+            return path;
+        }
+        List<Integer> resBuf;
+        if (!(resBuf = dfs(path, cur.leftNode, tar)).isEmpty()) {
+            return resBuf;
+        }
+        if (!(resBuf = dfs(path, cur.rightNode, tar)).isEmpty()) {
+            return resBuf;
+        }
+        path.removeLast();
+        return Collections.emptyList();
+    }
+
+    public static class TreeNode {
+        protected TreeNode leftNode;
+        protected TreeNode rightNode;
+        protected int value;
+
+        public TreeNode(int value) {
+            this.value = value;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node8 = new TreeNode(8);
+        TreeNode node9 = new TreeNode(9);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        node1.leftNode = node8;
+        node1.rightNode = node9;
+        node8.rightNode = node4;
+        node9.leftNode = node5;
+        System.out.println(Arrays.toString(new MySolution().getPath(node1, 5)));
+    }
+
+
+    // 415. 字符串相加
+    public String addStrings(String num1, String num2) {
+        int i = num1.length() - 1, j = num2.length() - 1;
+        int carry = 0, number1, number2;
+        StringBuilder reverseResult = new StringBuilder();
+        while (i >= 0 || j >= 0) {
+            number1 = i < 0 ? 0 : num1.charAt(i) - '0';
+            number2 = j < 0 ? 0 : num2.charAt(i) - '0';
+            int sum = number1 + number2 + carry;
+            if(sum >= 10) {
+                carry = 1;
+                sum -= 10;
+            } else {
+                carry = 0;
+            }
+            reverseResult.append(sum);
+            i--;j--;
+        }
+        return reverseResult.reverse().toString();
+    }
+
 }

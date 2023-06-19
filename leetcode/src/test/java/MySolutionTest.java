@@ -1,7 +1,12 @@
+import linkedlist.LinkedListSolution;
 import org.junit.Before;
 import org.junit.Test;
+import util.JUtils;
+
+import static linkedlist.LinkedListSolution.ListNode;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class MySolutionTest {
 
@@ -34,5 +39,35 @@ public class MySolutionTest {
         assertEquals(2, solution.getArrayCenter(new int[]{5,3,6,1,15}));
         assertEquals(1, solution.getArrayCenter(new int[]{1,3}));
         assertEquals(0, solution.getArrayCenter(new int[]{3,1}));
+    }
+
+    @Test
+    public void longestCommonPostfix() {
+        assertEquals("c", solution.longestCommonPostfix(new String[]{"abc","bbc","c"}));
+    }
+
+    @Test
+    public void detectCycle() {
+//        ListNode node4 = new ListNode(4);
+//        ListNode node3 = new ListNode(3);
+//        ListNode node2 = new ListNode(2);
+//        ListNode node1 = new ListNode(1);
+//        node1.next = node2; node2.next = node3; node3.next = node4; node4.next = node2;
+//        ListNode listNode = solution.detectCycle(node1);
+//        assertEquals(2, listNode.val);
+
+
+
+    }
+
+    @Test
+    public void getPath() {
+    }
+
+    @Test
+    public void addStrings() {
+        assertEquals("533", solution.addStrings("456", "77"));
+        assertEquals("134", solution.addStrings("11", "123"));
+        assertEquals("0", solution.addStrings("0", "0"));
     }
 }
