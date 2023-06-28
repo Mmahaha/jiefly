@@ -1,3 +1,4 @@
+import linkedlist.LinkedListSolution;
 import org.junit.Before;
 import org.junit.Test;
 import util.JUtils;
@@ -5,6 +6,7 @@ import util.JUtils;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
+import static linkedlist.LinkedListSolution.ListNode;
 
 public class Hot100SolutionTest {
 
@@ -105,4 +107,16 @@ public class Hot100SolutionTest {
         System.out.println(solution.subsets(new int[]{1,2,3}));
         System.out.println(solution.subsets(new int[]{0}));
     }
+
+    @Test
+    public void mergeKLists() {
+        System.out.println(Arrays.toString(JUtils.nodesToArray(solution.mergeKLists(new ListNode[]{
+                JUtils.buildListNode(new int[]{1, 4, 5}),
+                JUtils.buildListNode(new int[]{1, 3, 4}),
+                JUtils.buildListNode(new int[]{2, 6})
+        }))));
+        solution.mergeKLists(new ListNode[]{new ListNode()});
+        solution.mergeKLists(new ListNode[]{null});
+    }
+
 }

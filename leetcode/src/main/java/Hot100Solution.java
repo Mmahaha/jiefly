@@ -1,9 +1,5 @@
-import util.JUtils;
-
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -364,5 +360,36 @@ public class Hot100Solution {
             backtrack2(result, path, candidates, target, sum + candidates[i], i + 1, suffixSum);
             path.removeLast();
         }
+    }
+
+    // 23. 合并 K 个升序链表
+    public ListNode mergeKLists(ListNode[] lists) {
+        return mergeKLists(lists, 0, lists.length - 1);
+    }
+
+    public ListNode mergeKLists(ListNode[] listNodes, int l, int r) {
+        if (l == r) {return listNodes[l];}
+        if (l > r) {return null;}
+        int m = (l + r) >> 1;
+        ListNode leftNode = mergeKLists(listNodes, l, m);
+        ListNode rightNode = mergeKLists(listNodes, m + 1, r);
+        return merge(leftNode, rightNode);
+    }
+
+    public ListNode merge(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode(-1), iterL = left, iterR = right, iterH = dummy;
+        while (iterL != null && iterR != null) {
+            if (iterL.val < iterR.val) {
+                iterH.next = iterL;
+                iterL = iterL.next;
+            } else {
+                iterH.next = iterR;
+                iterR = iterR.next;
+            }
+            iterH = iterH.next;
+        }
+        if (iterL != null) {iterH.next = iterL;}
+        if (iterR != null) {iterH.next = iterR;}
+        return dummy.next;
     }
 }
