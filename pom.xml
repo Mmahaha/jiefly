@@ -13,6 +13,7 @@
         <module>justtest</module>
         <module>leetcode</module>
         <module>es</module>
+        <module>dubbo</module>
     </modules>
 
     <dependencies>
@@ -66,6 +67,13 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
