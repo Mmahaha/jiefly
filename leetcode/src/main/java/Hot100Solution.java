@@ -392,4 +392,25 @@ public class Hot100Solution {
         if (iterR != null) {iterH.next = iterR;}
         return dummy.next;
     }
+
+    // 33.搜索旋转排序数组
+    public int search(int[] nums, int target) {
+        return binarySearch(nums, target, 0, nums.length - 1, target >= nums[0]);
+    }
+
+    public int binarySearch(int[] nums, int target, int l, int r, boolean inLeft) {
+        if (l > r) {return -1;}
+        int m = (l + r) >> 1;
+        if (nums[m] == target) {return m;}
+        if (nums[m] >= nums[0] && !inLeft) {
+            return binarySearch(nums, target, m + 1, r, inLeft);
+        }
+        if (nums[m] <= nums[nums.length-1] && inLeft && nums[0] > nums[nums.length-1]) {    // 需要排除原本就是递增的情况
+            return binarySearch(nums, target, l, m - 1, inLeft);
+        }
+        if (nums[m] > target) {
+            return binarySearch(nums, target, l, m - 1, inLeft);
+        }
+        return binarySearch(nums, target, m + 1, r, inLeft);
+    }
 }
