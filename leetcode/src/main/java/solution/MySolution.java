@@ -1,3 +1,5 @@
+package solution;
+
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
@@ -145,15 +147,15 @@ public class MySolution {
         if (cur == null) {
             return Collections.emptyList();
         }
-        path.add(cur.value);
-        if (cur.value == tar) {
+        path.add(cur.val);
+        if (cur.val == tar) {
             return path;
         }
         List<Integer> resBuf;
-        if (!(resBuf = dfs(path, cur.leftNode, tar)).isEmpty()) {
+        if (!(resBuf = dfs(path, cur.left, tar)).isEmpty()) {
             return resBuf;
         }
-        if (!(resBuf = dfs(path, cur.rightNode, tar)).isEmpty()) {
+        if (!(resBuf = dfs(path, cur.right, tar)).isEmpty()) {
             return resBuf;
         }
         path.removeLast();
@@ -161,12 +163,18 @@ public class MySolution {
     }
 
     public static class TreeNode {
-        protected TreeNode leftNode;
-        protected TreeNode rightNode;
-        protected int value;
+        protected TreeNode left;
+        protected TreeNode right;
+        protected int val;
 
-        public TreeNode(int value) {
-            this.value = value;
+        public TreeNode(int val) {
+            this.val = val;
+        }
+
+        public TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 
@@ -177,10 +185,10 @@ public class MySolution {
         TreeNode node9 = new TreeNode(9);
         TreeNode node4 = new TreeNode(4);
         TreeNode node5 = new TreeNode(5);
-        node1.leftNode = node8;
-        node1.rightNode = node9;
-        node8.rightNode = node4;
-        node9.leftNode = node5;
+        node1.left = node8;
+        node1.right = node9;
+        node8.right = node4;
+        node9.left = node5;
         System.out.println(Arrays.toString(new MySolution().getPath(node1, 5)));
     }
 

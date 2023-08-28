@@ -7,7 +7,7 @@ public class SortTest {
         for (int i = 0; i < 500; i++) {
             int[] array = generateArray();
             long start = System.currentTimeMillis();
-            new ISort.HeapSort().sort(array);
+            new ISort.QuickSort().sort(array);
 //            Arrays.sort(array);
             System.out.println(String.format("cost %sms", System.currentTimeMillis() - start));
             check(array);

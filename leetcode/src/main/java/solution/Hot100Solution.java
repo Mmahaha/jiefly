@@ -1,9 +1,13 @@
+package solution;
+
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static linkedlist.LinkedListSolution.ListNode;
+import static solution.MySolution.TreeNode;
 
 public class Hot100Solution {
 
@@ -413,4 +417,153 @@ public class Hot100Solution {
         }
         return binarySearch(nums, target, m + 1, r, inLeft);
     }
+
+    // 49. 字母异位词分组
+    public List<List<String>> groupAnagrams(String[] strs) {
+        return new ArrayList<>(Arrays.stream(strs)
+                .collect(Collectors.groupingBy(s -> {
+                    char[] charArray = s.toCharArray();
+                    Arrays.sort(charArray);
+                    return new String(charArray);
+                })).values());
+    }
+
+    // 53.最大子数组和
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int res = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    // 55.跳跃游戏
+    public boolean canJump(int[] nums) {
+        int i = 0, maxLength = 0;
+        while (i <= maxLength && i < nums.length) {
+            maxLength = Math.max(maxLength, i + nums[i]);
+            if (maxLength >= nums.length - 1) {return true;}
+            i++;
+        }
+        return false;
+    }
+
+    // 56.合并区间
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        LinkedList<int[]> result = new LinkedList<>();
+        result.add(intervals[0]);
+        for (int i = 1; i < intervals.length; i++) {
+            int[] last = result.getLast();
+            int[] cur = intervals[i];
+            if (cur[0] <= last[1]) {
+                last[1] = Math.max(last[1],cur[1]);
+            } else {
+                result.add(cur);
+            }
+        }
+        return result.toArray(new int[0][0]);
+    }
+
+    // 46.全排列
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(nums, new LinkedList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] nums, LinkedList<Integer> path, List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int num : nums) {
+            if (path.contains(num)) {
+                continue;
+            }
+            path.addLast(num);
+            backtrack(nums, path, result);
+            path.removeLast();
+        }
+    }
+
+    // 75. 颜色分类
+    public void sortColors(int[] nums) {
+        int l = 0, r = nums.length - 1, i = 0;
+        while (i <= r) {
+            if (nums[i] == 2) {
+                swap(nums, i, r);
+                r--;
+            } else if (nums[i] == 1) {
+                i++;
+            } else {
+                swap(nums, i, l);
+                i++;
+                l++;
+            }
+        }
+    }
+
+    // 448. 找到所有数组中消失的数字
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        for (int num : nums) {
+            int ori = Math.abs(num);
+            if (nums[ori-1] > 0) {
+                nums[ori-1] = -nums[ori-1];
+            }
+        }
+        List<Integer> result = new ArrayList<>(10);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                result.add(i + 1);
+            }
+        }
+        return result;
+    }
+
+    // 617. 合并二叉树
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if (root1 == null) {return root2;}
+        if (root2 == null) {return root1;}
+        TreeNode root = new TreeNode(root1.val + root2.val);
+        root.left = mergeTrees(root1.left, root2.left);
+        root.right = mergeTrees(root1.right, root2.right);
+        return root;
+    }
+
+    // 543.二叉树的直径
+    public int diameterOfBinaryTree(TreeNode root) {
+        AtomicInteger result = new AtomicInteger();
+        dfs(root, result);
+        return result.get();
+    }
+
+    public int dfs(TreeNode root, AtomicInteger maxDepth) {
+        if (root == null) {return 0;}
+        int leftDepth = dfs(root.left, maxDepth);
+        int rightDepth = dfs(root.right, maxDepth);
+        if (maxDepth.get() < leftDepth + rightDepth) {
+            maxDepth.set(leftDepth + rightDepth);
+        }
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+
+    // 461.汉明距离
+    public int hammingDistance(int x, int y) {
+        return Integer.bitCount(x ^ y);
+    }
+
+    // 338.比特位计数
+    public int[] countBits(int n) {
+        int[] result = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            result[i] = Integer.bitCount(i);
+        }
+        return result;
+    }
+
+
 }

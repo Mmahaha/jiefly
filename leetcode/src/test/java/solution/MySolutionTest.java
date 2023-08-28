@@ -1,9 +1,8 @@
-import linkedlist.LinkedListSolution;
+package solution;
+
 import org.junit.Before;
 import org.junit.Test;
-import util.JUtils;
-
-import static linkedlist.LinkedListSolution.ListNode;
+import solution.MySolution;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

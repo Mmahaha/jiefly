@@ -1,6 +1,8 @@
-import linkedlist.LinkedListSolution;
+package solution;
+
 import org.junit.Before;
 import org.junit.Test;
+import solution.Hot100Solution;
 import util.JUtils;
 
 import java.util.Arrays;
@@ -125,5 +127,53 @@ public class Hot100SolutionTest {
         assertEquals(1, solution.search(new int[]{1,3}, 3));
         assertEquals(1, solution.search(new int[]{3,1}, 1));
         assertEquals(0, solution.search(new int[]{1,3,5}, 1));
+    }
+
+    @Test
+    public void groupAnagrams() {
+        System.out.println(solution.groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
+    }
+
+    @Test
+    public void maxSubArray() {
+        assertEquals(6, solution.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
+    }
+
+    @Test
+    public void canJump() {
+        assertTrue(solution.canJump(new int[]{2,3,1,1,4}));
+        assertFalse(solution.canJump(new int[]{3,2,1,0,4}));
+        assertTrue(solution.canJump(new int[]{0}));
+        assertFalse(solution.canJump(new int[]{0,1}));
+    }
+
+    @Test
+    public void merge() {
+        System.out.println(Arrays.deepToString(solution.merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+        System.out.println(Arrays.deepToString(solution.merge(new int[][]{{1, 4}, {2, 3}})));
+    }
+
+    @Test
+    public void permute() {
+        System.out.println(solution.permute(new int[]{0,1}));
+    }
+
+    @Test
+    public void sortColors() {
+        int[] ints = {1, 2, 0, 2, 1, 0, 2};
+        solution.sortColors(ints);
+        System.out.println(Arrays.toString(ints));
+    }
+
+    @Test
+    public void hammingDistance() {
+        assertEquals(2, solution.hammingDistance(1, 4));
+        assertEquals(1, solution.hammingDistance(3, 1));
+        assertEquals(2, solution.hammingDistance(93, 73));
+    }
+
+    @Test
+    public void countBits() {
+        assertArrayEquals(new int[]{0,1,1}, solution.countBits(2));
     }
 }

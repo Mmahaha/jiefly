@@ -1,5 +1,8 @@
+package solution;
+
 import org.junit.Before;
 import org.junit.Test;
+import solution.CodingInterviewSolution;
 import util.JUtils;
 
 import static org.junit.Assert.*;

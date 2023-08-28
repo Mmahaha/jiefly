@@ -1,9 +1,10 @@
+package solution;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
-import util.JUtils;
+import solution.DailySolution;
 
 import java.util.Arrays;
-import java.util.BitSet;
 
 import static org.junit.Assert.*;
 
