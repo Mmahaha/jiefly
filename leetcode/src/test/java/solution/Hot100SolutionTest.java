@@ -176,4 +176,10 @@ public class Hot100SolutionTest {
     public void countBits() {
         assertArrayEquals(new int[]{0,1,1}, solution.countBits(2));
     }
+
+    @Test
+    public void minDistance() {
+        assertEquals(3, solution.minDistance("horse", "ros"));
+        assertEquals(5, solution.minDistance("intention", "execution"));
+    }
 }

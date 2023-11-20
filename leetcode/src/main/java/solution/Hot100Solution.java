@@ -1,6 +1,16 @@
 package solution;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -11,77 +21,10 @@ import static solution.MySolution.TreeNode;
 
 public class Hot100Solution {
 
-    // 146.LRU缓存
-    class LRUCache {
-        private final Map<Integer, Node> storeMap;
-        private final int capacity;
-        private Node head;
-        private Node tail;
-        public LRUCache(int capacity) {
-            this.capacity = capacity;
-            storeMap = new HashMap<>(capacity);
-            head = new Node(null, null, -1, -1);
-            tail = new Node(head, null, -1, -1);
-            head.next = tail;
-        }
-
-        public int get(int key) {
-            Node node = storeMap.get(key);
-            if (node == null) {
-                return -1;
-            }
-            // moveToHead
-            moveToHead(node);
-            return node.val;
-        }
-
-        public void put(int key, int value) {
-            if (storeMap.containsKey(key)) {
-                Node node = storeMap.get(key);
-                node.val = value;
-                moveToHead(node);
-                return;
-            }
-            if (storeMap.size() < capacity) {
-                createHeadNode(key, value);
-                return;
-            }
-            // deleteTail && removeKey
-            Node last = tail.prev;
-            last.prev.next = tail;
-            tail.prev = last.prev;
-            storeMap.remove(last.key);
-            createHeadNode(key, value);
-        }
-
-        private void moveToHead(Node node) {
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
-            node.prev = head;
-            node.next = head.next;
-            head.next.prev = node;
-            head.next = node;
-        }
-
-        private void createHeadNode(int key, int value) {
-            Node newNode = new Node(head, head.next, key, value);
-            storeMap.put(key, newNode);
-            head.next.prev = newNode;
-            head.next = newNode;
-        }
-    }
-    private static class Node {
-        Node prev;
-        Node next;
-        Integer key;
-        Integer val;
-
-        public Node(Node prev, Node next, Integer key, Integer val) {
-            this.prev = prev;
-            this.next = next;
-            this.key = key;
-            this.val = val;
-        }
+    private static void swap(int[] array, int x, int y) {
+        int buf = array[x];
+        array[x] = array[y];
+        array[y] = buf;
     }
 
     // 15. 三数之和
@@ -111,7 +54,7 @@ public class Hot100Solution {
     public int maxArea(int[] height) {
         int result = -1, i = 0, j = height.length - 1;
         while (i < j) {
-            result = Math.max(result, (j-i) * Math.min(height[j],height[i]));
+            result = Math.max(result, (j - i) * Math.min(height[j], height[i]));
             if (height[i] < height[j]) {
                 i++;
             } else {
@@ -123,17 +66,21 @@ public class Hot100Solution {
 
     // 17. 电话号码的字母组合
     public List<String> letterCombinations(String digits) {
-        Map<Character,List<String>> map = new HashMap<>();
+        Map<Character, List<String>> map = new HashMap<>();
         if (digits.isEmpty()) {
             return Collections.emptyList();
         }
-        map.put('2', Arrays.asList("a","b","c"));map.put('3', Arrays.asList("d","e","f"));
-        map.put('4', Arrays.asList("g","h","i"));map.put('5', Arrays.asList("j","k","l"));
-        map.put('6', Arrays.asList("m","n","o"));map.put('7', Arrays.asList("p","q","r","s"));
-        map.put('8', Arrays.asList("t","u","v"));map.put('9', Arrays.asList("w","x","y","z"));
+        map.put('2', Arrays.asList("a", "b", "c"));
+        map.put('3', Arrays.asList("d", "e", "f"));
+        map.put('4', Arrays.asList("g", "h", "i"));
+        map.put('5', Arrays.asList("j", "k", "l"));
+        map.put('6', Arrays.asList("m", "n", "o"));
+        map.put('7', Arrays.asList("p", "q", "r", "s"));
+        map.put('8', Arrays.asList("t", "u", "v"));
+        map.put('9', Arrays.asList("w", "x", "y", "z"));
         List<String> result = map.get(digits.charAt(0));
-        BiFunction<List<String>,List<String>,List<String>> buildCombinations = (sList1,sList2) ->
-                sList1.stream().flatMap(s1 -> sList2.stream().map(s2 -> s1+s2)).collect(Collectors.toList());
+        BiFunction<List<String>, List<String>, List<String>> buildCombinations = (sList1, sList2) ->
+                sList1.stream().flatMap(s1 -> sList2.stream().map(s2 -> s1 + s2)).collect(Collectors.toList());
         for (int i = 1; i < digits.length(); i++) {
             result = buildCombinations.apply(result, map.get(digits.charAt(i)));
         }
@@ -142,7 +89,9 @@ public class Hot100Solution {
 
     // 6. N 字形变换
     public String convert(String s, int numRows) {
-        if (numRows == 1) {return s;}
+        if (numRows == 1) {
+            return s;
+        }
         StringBuilder result = new StringBuilder();
         int i = -1, interval = (numRows - 1) * 2;
         while (++i < numRows && i < s.length()) {
@@ -151,12 +100,17 @@ public class Hot100Solution {
         }
         return result.toString();
     }
+
     private void buildStr(String s, int interval1, int interval2, StringBuilder result, int index) {
         int[] loop = new int[]{interval1, interval2};
-        for (int i = 0; ; i^=1) {
+        for (int i = 0; ; i ^= 1) {
             int interval = loop[i];
-            if (interval == 0) {continue;}
-            if ((index+=interval) >= s.length()) {break;}
+            if (interval == 0) {
+                continue;
+            }
+            if ((index += interval) >= s.length()) {
+                break;
+            }
             result.append(s.charAt(index));
         }
     }
@@ -233,19 +187,20 @@ public class Hot100Solution {
     }
 
     private void backtrack(int leftBracketCnt, int rightBracketCnt, int n, StringBuilder builder, List<String> result) {
-        if (leftBracketCnt > n || rightBracketCnt > n || rightBracketCnt > leftBracketCnt) {return;}
+        if (leftBracketCnt > n || rightBracketCnt > n || rightBracketCnt > leftBracketCnt) {
+            return;
+        }
         if (rightBracketCnt == n) {
             result.add(builder.toString());
             return;
         }
         builder.append('(');
-        backtrack(leftBracketCnt+1, rightBracketCnt, n, builder, result);
-        builder.deleteCharAt(builder.length()-1);
+        backtrack(leftBracketCnt + 1, rightBracketCnt, n, builder, result);
+        builder.deleteCharAt(builder.length() - 1);
         builder.append(')');
-        backtrack(leftBracketCnt, rightBracketCnt+1, n, builder, result);
-        builder.deleteCharAt(builder.length()-1);
+        backtrack(leftBracketCnt, rightBracketCnt + 1, n, builder, result);
+        builder.deleteCharAt(builder.length() - 1);
     }
-
 
     // 39. 组合总和
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -262,7 +217,9 @@ public class Hot100Solution {
             return;
         }
         for (int i = startIndex; i < candidates.length; i++) {
-            if (sum + candidates[i] > tar) {break;}
+            if (sum + candidates[i] > tar) {
+                break;
+            }
             comb.add(candidates[i]);
             backtrack(result, comb, candidates, tar, sum + candidates[i], i);
             comb.removeLast();
@@ -271,13 +228,17 @@ public class Hot100Solution {
 
     // 70. 爬楼梯
     public int climbStairs(int n) {
-        if (n == 1) {return 1;}
-        if (n == 2) {return 2;}
-        int[] array = new int[n+1];
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        int[] array = new int[n + 1];
         array[1] = 1;
         array[2] = 2;
         for (int i = 3; i <= n; i++) {
-            array[i] = array[i-1] + array[i-2];
+            array[i] = array[i - 1] + array[i - 2];
         }
         return array[n];
     }
@@ -303,8 +264,8 @@ public class Hot100Solution {
         // 1、从右至左找到第一个非降序的元素
         int tar = -1, i;
         for (i = nums.length - 1; i >= 1; i--) {
-            if (nums[i] >= nums[i-1]) {
-                tar = nums[i-1];
+            if (nums[i] >= nums[i - 1]) {
+                tar = nums[i - 1];
             }
         }
         if (tar == -1) {
@@ -316,12 +277,6 @@ public class Hot100Solution {
         }
         // 2、从i开始往右找第一个比他大的
 //        while ()
-    }
-
-    private static void swap(int[] array, int x, int y) {
-        int buf = array[x];
-        array[x] = array[y];
-        array[y] = buf;
     }
 
     // 40. 组合总和 II
@@ -344,7 +299,7 @@ public class Hot100Solution {
         Set<List<Integer>> result = new HashSet<>(candidates.length);
         int[] suffixSum = new int[candidates.length + 1];
         for (int i = candidates.length - 1; i >= 0; i--) {
-            suffixSum[i] = candidates[i] + suffixSum[i+1];
+            suffixSum[i] = candidates[i] + suffixSum[i + 1];
         }
         backtrack2(result, new LinkedList<>(), candidates, target, 0, 0, suffixSum);
         return new ArrayList<>(result);
@@ -358,8 +313,12 @@ public class Hot100Solution {
             return;
         }
         for (int i = startIndex; i < candidates.length; i++) {
-            if (sum + candidates[i] > target) {break;}
-            if (sum + suffixSum[i] < target) {break;}
+            if (sum + candidates[i] > target) {
+                break;
+            }
+            if (sum + suffixSum[i] < target) {
+                break;
+            }
             path.add(candidates[i]);
             backtrack2(result, path, candidates, target, sum + candidates[i], i + 1, suffixSum);
             path.removeLast();
@@ -372,8 +331,12 @@ public class Hot100Solution {
     }
 
     public ListNode mergeKLists(ListNode[] listNodes, int l, int r) {
-        if (l == r) {return listNodes[l];}
-        if (l > r) {return null;}
+        if (l == r) {
+            return listNodes[l];
+        }
+        if (l > r) {
+            return null;
+        }
         int m = (l + r) >> 1;
         ListNode leftNode = mergeKLists(listNodes, l, m);
         ListNode rightNode = mergeKLists(listNodes, m + 1, r);
@@ -392,8 +355,12 @@ public class Hot100Solution {
             }
             iterH = iterH.next;
         }
-        if (iterL != null) {iterH.next = iterL;}
-        if (iterR != null) {iterH.next = iterR;}
+        if (iterL != null) {
+            iterH.next = iterL;
+        }
+        if (iterR != null) {
+            iterH.next = iterR;
+        }
         return dummy.next;
     }
 
@@ -403,13 +370,17 @@ public class Hot100Solution {
     }
 
     public int binarySearch(int[] nums, int target, int l, int r, boolean inLeft) {
-        if (l > r) {return -1;}
+        if (l > r) {
+            return -1;
+        }
         int m = (l + r) >> 1;
-        if (nums[m] == target) {return m;}
+        if (nums[m] == target) {
+            return m;
+        }
         if (nums[m] >= nums[0] && !inLeft) {
             return binarySearch(nums, target, m + 1, r, inLeft);
         }
-        if (nums[m] <= nums[nums.length-1] && inLeft && nums[0] > nums[nums.length-1]) {    // 需要排除原本就是递增的情况
+        if (nums[m] <= nums[nums.length - 1] && inLeft && nums[0] > nums[nums.length - 1]) {    // 需要排除原本就是递增的情况
             return binarySearch(nums, target, l, m - 1, inLeft);
         }
         if (nums[m] > target) {
@@ -434,7 +405,7 @@ public class Hot100Solution {
         dp[0] = nums[0];
         int res = dp[0];
         for (int i = 1; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
             res = Math.max(res, dp[i]);
         }
         return res;
@@ -445,7 +416,9 @@ public class Hot100Solution {
         int i = 0, maxLength = 0;
         while (i <= maxLength && i < nums.length) {
             maxLength = Math.max(maxLength, i + nums[i]);
-            if (maxLength >= nums.length - 1) {return true;}
+            if (maxLength >= nums.length - 1) {
+                return true;
+            }
             i++;
         }
         return false;
@@ -460,7 +433,7 @@ public class Hot100Solution {
             int[] last = result.getLast();
             int[] cur = intervals[i];
             if (cur[0] <= last[1]) {
-                last[1] = Math.max(last[1],cur[1]);
+                last[1] = Math.max(last[1], cur[1]);
             } else {
                 result.add(cur);
             }
@@ -511,8 +484,8 @@ public class Hot100Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
         for (int num : nums) {
             int ori = Math.abs(num);
-            if (nums[ori-1] > 0) {
-                nums[ori-1] = -nums[ori-1];
+            if (nums[ori - 1] > 0) {
+                nums[ori - 1] = -nums[ori - 1];
             }
         }
         List<Integer> result = new ArrayList<>(10);
@@ -526,8 +499,12 @@ public class Hot100Solution {
 
     // 617. 合并二叉树
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
-        if (root1 == null) {return root2;}
-        if (root2 == null) {return root1;}
+        if (root1 == null) {
+            return root2;
+        }
+        if (root2 == null) {
+            return root1;
+        }
         TreeNode root = new TreeNode(root1.val + root2.val);
         root.left = mergeTrees(root1.left, root2.left);
         root.right = mergeTrees(root1.right, root2.right);
@@ -542,7 +519,9 @@ public class Hot100Solution {
     }
 
     public int dfs(TreeNode root, AtomicInteger maxDepth) {
-        if (root == null) {return 0;}
+        if (root == null) {
+            return 0;
+        }
         int leftDepth = dfs(root.left, maxDepth);
         int rightDepth = dfs(root.right, maxDepth);
         if (maxDepth.get() < leftDepth + rightDepth) {
@@ -563,6 +542,104 @@ public class Hot100Solution {
             result[i] = Integer.bitCount(i);
         }
         return result;
+    }
+
+    // 72.编辑距离
+    public int minDistance(String word1, String word2) {
+        int l1 = word1.length();
+        int l2 = word2.length();
+        int[][] dp = new int[l1 + 1][l2 + 1];
+        for (int i = 0; i < l1 + 1; i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 0; i < l2 + 1; i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i <= l1; i++) {
+            for (int j = 1; j <= l2; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[l1][l2];
+    }
+
+    private static class Node {
+        Node prev;
+        Node next;
+        Integer key;
+        Integer val;
+
+        public Node(Node prev, Node next, Integer key, Integer val) {
+            this.prev = prev;
+            this.next = next;
+            this.key = key;
+            this.val = val;
+        }
+    }
+
+    // 146.LRU缓存
+    class LRUCache {
+        private final Map<Integer, Node> storeMap;
+        private final int capacity;
+        private Node head;
+        private Node tail;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            storeMap = new HashMap<>(capacity);
+            head = new Node(null, null, -1, -1);
+            tail = new Node(head, null, -1, -1);
+            head.next = tail;
+        }
+
+        public int get(int key) {
+            Node node = storeMap.get(key);
+            if (node == null) {
+                return -1;
+            }
+            // moveToHead
+            moveToHead(node);
+            return node.val;
+        }
+
+        public void put(int key, int value) {
+            if (storeMap.containsKey(key)) {
+                Node node = storeMap.get(key);
+                node.val = value;
+                moveToHead(node);
+                return;
+            }
+            if (storeMap.size() < capacity) {
+                createHeadNode(key, value);
+                return;
+            }
+            // deleteTail && removeKey
+            Node last = tail.prev;
+            last.prev.next = tail;
+            tail.prev = last.prev;
+            storeMap.remove(last.key);
+            createHeadNode(key, value);
+        }
+
+        private void moveToHead(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+        }
+
+        private void createHeadNode(int key, int value) {
+            Node newNode = new Node(head, head.next, key, value);
+            storeMap.put(key, newNode);
+            head.next.prev = newNode;
+            head.next = newNode;
+        }
     }
 
 
