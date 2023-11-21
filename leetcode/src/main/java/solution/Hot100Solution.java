@@ -567,6 +567,20 @@ public class Hot100Solution {
         return dp[l1][l2];
     }
 
+    // 48. 旋转图像
+    public void rotate(int[][] matrix) {
+        int head = -1, n = matrix.length;
+        while (++head < n / 2) {
+            for (int i = 0; i < n - head * 2 - 1; i++) {
+                int temp = matrix[head][head+i];
+                matrix[head][head+i] = matrix[n-head-1-i][head];
+                matrix[n-head-1-i][head] = matrix[n-head-1][n-head-1-i];
+                matrix[n-head-1][n-head-1-i] = matrix[head+i][n-head-1];
+                matrix[head+i][n-head-1] = temp;
+            }
+        }
+    }
+
     private static class Node {
         Node prev;
         Node next;
