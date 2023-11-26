@@ -182,4 +182,9 @@ public class Hot100SolutionTest {
         assertEquals(3, solution.minDistance("horse", "ros"));
         assertEquals(5, solution.minDistance("intention", "execution"));
     }
+
+    @Test
+    public void nextPermutation() {
+        solution.nextPermutation(new int[]{2,3,1});
+    }
 }

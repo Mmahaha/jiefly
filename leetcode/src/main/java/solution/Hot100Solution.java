@@ -261,22 +261,35 @@ public class Hot100Solution {
 
     // 31. 下一个排列
     public void nextPermutation(int[] nums) {
-        // 1、从右至左找到第一个非降序的元素
-        int tar = -1, i;
-        for (i = nums.length - 1; i >= 1; i--) {
-            if (nums[i] >= nums[i - 1]) {
-                tar = nums[i - 1];
+        int n = nums.length;
+        int firstDescendIndex = -1;
+        // 从右往左找第一个降序的数
+        for (int i = n - 1; i > 0; i--) {
+            if (nums[i] > nums[i - 1]) {
+                firstDescendIndex = i - 1;
+                break;
             }
         }
-        if (tar == -1) {
-            int left = 0, right = nums.length - 1;
-            while (left < right) {
-                swap(nums, left++, right--);
-            }
+        // 降序数组，直接排序返回
+        if (firstDescendIndex == -1) {
+            Arrays.sort(nums);
             return;
         }
-        // 2、从i开始往右找第一个比他大的
-//        while ()
+        // 找出比firstDescend大最小的数
+        int largerIndex = firstDescendIndex + 1;
+        int subtract = nums[largerIndex] - nums[firstDescendIndex], subtractBuf;
+        for (int i = firstDescendIndex + 2; i < n; i++) {
+            // 已经比第一个降序的数小的话，可以剪枝
+            if (nums[i] <= nums[firstDescendIndex]) {break;}
+            if ((subtractBuf = (nums[i] - nums[firstDescendIndex])) < subtract) {
+                subtract = subtractBuf;
+                largerIndex = i;
+            }
+        }
+        int temp = nums[firstDescendIndex];
+        nums[firstDescendIndex] = nums[largerIndex];
+        nums[largerIndex] = temp;
+        Arrays.sort(nums, firstDescendIndex + 1, n);    // 可以用双指针进行反转排序（原数组已为降序）
     }
 
     // 40. 组合总和 II
