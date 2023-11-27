@@ -627,6 +627,22 @@ public class Hot100Solution {
         return false;
     }
 
+    // 94. 二叉树的中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        List<Integer> res = new ArrayList<>(100);
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            res.add((root = stack.pop()).val);
+            root = root.right;
+        }
+        return res;
+    }
+
+
 
     private static class Node {
         Node prev;
