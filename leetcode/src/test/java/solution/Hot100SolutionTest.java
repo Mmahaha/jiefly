@@ -187,4 +187,13 @@ public class Hot100SolutionTest {
     public void nextPermutation() {
         solution.nextPermutation(new int[]{2,3,1});
     }
+
+    @Test
+    public void exist() {
+        assertTrue(solution.exist(new char[][] {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}}, "ABCCED"));
+        assertTrue(solution.exist(new char[][] {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}}, "SEE"));
+        assertFalse(solution.exist(new char[][] {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}}, "ABCB"));
+        assertTrue(solution.exist(new char[][] {{'C','A','A'},{'A','A','A'},{'B','C','D'}}, "AAB"));
+        assertTrue(solution.exist(new char[][] {{'A','B','C','E'},{'S','F','E','S'},{'A','D','E','E'}}, "ABCESEEEFS"));
+    }
 }

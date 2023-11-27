@@ -594,6 +594,40 @@ public class Hot100Solution {
         }
     }
 
+    // 79. 单词搜索
+    public boolean exist(char[][] board, String word) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                StringBuilder path = new StringBuilder();
+                boolean[][] visited = new boolean[board.length][board[0].length];
+                if (backtrack(path, word, i, j, board, visited)) {return true;}
+            }
+        }
+        return false;
+    }
+
+    private boolean backtrack(StringBuilder path, String word, int row, int col, char[][] board, boolean[][] visited) {
+        if (row >= board.length || col >= board[0].length || row < 0 || col < 0 || visited[row][col]) {return false;}
+        char curChar = board[row][col];
+        if (word.charAt(path.length()) == curChar) {
+            path.append(curChar);
+            visited[row][col] = true;
+            if (path.length() == word.length()) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        if (backtrack(path, word, row + 1, col, board, visited)) {return true;}
+        if (backtrack(path, word, row - 1, col, board, visited)) {return true;}
+        if (backtrack(path, word, row, col + 1, board, visited)) {return true;}
+        if (backtrack(path, word, row, col - 1, board, visited)) {return true;}
+        path.deleteCharAt(path.length() - 1);
+        visited[row][col] = false;
+        return false;
+    }
+
+
     private static class Node {
         Node prev;
         Node next;
