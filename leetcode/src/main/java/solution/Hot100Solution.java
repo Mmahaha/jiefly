@@ -632,7 +632,7 @@ public class Hot100Solution {
         LinkedList<TreeNode> stack = new LinkedList<>();
         List<Integer> res = new ArrayList<>(100);
         while (root != null || !stack.isEmpty()) {
-            while (root != null) {
+            while (root != null)  {
                 stack.push(root);
                 root = root.left;
             }
@@ -642,6 +642,26 @@ public class Hot100Solution {
         return res;
     }
 
+    // 96. 不同的二叉搜索树
+//    public int numTrees(int n) {
+//
+//    }
+
+
+    // 128. 最长连续序列
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+        int res = 0;
+        for (int num : nums) {
+            if (set.contains(num - 1)){continue;}
+            int resBuf = 1;
+            while (set.remove(++num)) {
+                resBuf++;
+            }
+            res = Math.max(res, resBuf);
+        }
+        return res;
+    }
 
 
     private static class Node {
