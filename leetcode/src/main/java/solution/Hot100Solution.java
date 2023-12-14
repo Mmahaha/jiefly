@@ -663,6 +663,19 @@ public class Hot100Solution {
         return res;
     }
 
+    // 283. 移动零
+    public void moveZeroes(int[] nums) {
+        int head = 0, cur = -1;
+        while (++cur < nums.length) {
+            if (nums[cur] == 0) {
+                continue;
+            }
+            int temp = nums[head];
+            nums[head++] = nums[cur];
+            nums[cur] = temp;
+        }
+    }
+
 
     private static class Node {
         Node prev;

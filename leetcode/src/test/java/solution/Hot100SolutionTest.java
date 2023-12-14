@@ -196,4 +196,11 @@ public class Hot100SolutionTest {
         assertTrue(solution.exist(new char[][] {{'C','A','A'},{'A','A','A'},{'B','C','D'}}, "AAB"));
         assertTrue(solution.exist(new char[][] {{'A','B','C','E'},{'S','F','E','S'},{'A','D','E','E'}}, "ABCESEEEFS"));
     }
+
+    @Test
+    public void moveZeroes() {
+        int[] array = new int[] {0,1,0,3,12};
+        solution.moveZeroes(array);
+        assertArrayEquals(new int[] {1,3,12,0,0}, array);
+    }
 }
