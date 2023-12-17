@@ -280,7 +280,9 @@ public class Hot100Solution {
         int subtract = nums[largerIndex] - nums[firstDescendIndex], subtractBuf;
         for (int i = firstDescendIndex + 2; i < n; i++) {
             // 已经比第一个降序的数小的话，可以剪枝
-            if (nums[i] <= nums[firstDescendIndex]) {break;}
+            if (nums[i] <= nums[firstDescendIndex]) {
+                break;
+            }
             if ((subtractBuf = (nums[i] - nums[firstDescendIndex])) < subtract) {
                 subtract = subtractBuf;
                 largerIndex = i;
@@ -585,11 +587,11 @@ public class Hot100Solution {
         int head = -1, n = matrix.length;
         while (++head < n / 2) {
             for (int i = 0; i < n - head * 2 - 1; i++) {
-                int temp = matrix[head][head+i];
-                matrix[head][head+i] = matrix[n-head-1-i][head];
-                matrix[n-head-1-i][head] = matrix[n-head-1][n-head-1-i];
-                matrix[n-head-1][n-head-1-i] = matrix[head+i][n-head-1];
-                matrix[head+i][n-head-1] = temp;
+                int temp = matrix[head][head + i];
+                matrix[head][head + i] = matrix[n - head - 1 - i][head];
+                matrix[n - head - 1 - i][head] = matrix[n - head - 1][n - head - 1 - i];
+                matrix[n - head - 1][n - head - 1 - i] = matrix[head + i][n - head - 1];
+                matrix[head + i][n - head - 1] = temp;
             }
         }
     }
@@ -600,14 +602,18 @@ public class Hot100Solution {
             for (int j = 0; j < board[0].length; j++) {
                 StringBuilder path = new StringBuilder();
                 boolean[][] visited = new boolean[board.length][board[0].length];
-                if (backtrack(path, word, i, j, board, visited)) {return true;}
+                if (backtrack(path, word, i, j, board, visited)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     private boolean backtrack(StringBuilder path, String word, int row, int col, char[][] board, boolean[][] visited) {
-        if (row >= board.length || col >= board[0].length || row < 0 || col < 0 || visited[row][col]) {return false;}
+        if (row >= board.length || col >= board[0].length || row < 0 || col < 0 || visited[row][col]) {
+            return false;
+        }
         char curChar = board[row][col];
         if (word.charAt(path.length()) == curChar) {
             path.append(curChar);
@@ -618,10 +624,18 @@ public class Hot100Solution {
         } else {
             return false;
         }
-        if (backtrack(path, word, row + 1, col, board, visited)) {return true;}
-        if (backtrack(path, word, row - 1, col, board, visited)) {return true;}
-        if (backtrack(path, word, row, col + 1, board, visited)) {return true;}
-        if (backtrack(path, word, row, col - 1, board, visited)) {return true;}
+        if (backtrack(path, word, row + 1, col, board, visited)) {
+            return true;
+        }
+        if (backtrack(path, word, row - 1, col, board, visited)) {
+            return true;
+        }
+        if (backtrack(path, word, row, col + 1, board, visited)) {
+            return true;
+        }
+        if (backtrack(path, word, row, col - 1, board, visited)) {
+            return true;
+        }
         path.deleteCharAt(path.length() - 1);
         visited[row][col] = false;
         return false;
@@ -632,7 +646,7 @@ public class Hot100Solution {
         LinkedList<TreeNode> stack = new LinkedList<>();
         List<Integer> res = new ArrayList<>(100);
         while (root != null || !stack.isEmpty()) {
-            while (root != null)  {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
@@ -653,7 +667,9 @@ public class Hot100Solution {
         Set<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toSet());
         int res = 0;
         for (int num : nums) {
-            if (set.contains(num - 1)){continue;}
+            if (set.contains(num - 1)) {
+                continue;
+            }
             int resBuf = 1;
             while (set.remove(++num)) {
                 resBuf++;
@@ -674,6 +690,62 @@ public class Hot100Solution {
             nums[head++] = nums[cur];
             nums[cur] = temp;
         }
+    }
+
+
+
+    // 560. 和为 K 的子数组
+    public int subarraySum(int[] nums, int k) {
+        int[] sum = new int[nums.length];
+        Map<Integer, Integer> sumCountMap = new HashMap<>();
+        int res = 0;
+        sum[0] = nums[0];
+        sumCountMap.put(sum[0], 1);
+        res += sum[0] == k ? 1 : 0;
+        for (int i = 1; i < nums.length; i++) {
+            sum[i] = sum[i - 1] + nums[i];
+            if (sum[i] == k) {
+                res += 1;
+
+            }
+            res += sumCountMap.getOrDefault(sum[i] - k, 0);
+            sumCountMap.compute(sum[i], (s,c) -> c == null ? 1 : c + 1);
+        }
+        return res;
+    }
+
+    // 438. 找到字符串中所有字母异位词
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] targetCount = new int[26];
+        int targetLength = p.length(), curLength = 0;
+        for (char c : p.toCharArray()) {
+            targetCount[c - 'a']++;
+        }
+        int p1 = 0, p2 = 0;
+        List<Integer> res = new ArrayList<>();
+        while (p1 <= s.length() - targetLength && p2 < s.length()) {
+            char c = s.charAt(p2);
+            if (targetCount[c - 'a'] > 0) {
+                targetCount[c - 'a']--;
+                p2++;
+                curLength++;
+                if (curLength == targetLength) {
+                    res.add(p1);
+                    targetCount[s.charAt(p1) - 'a']++;
+                    curLength--;
+                    p1++;
+                }
+            } else {
+                while (s.charAt(p1) != c) {
+                    targetCount[s.charAt(p1) - 'a']++;
+                    curLength--;
+                    p1++;
+                }
+                p1++;
+                p2++;
+            }
+        }
+        return res;
     }
 
 

@@ -203,4 +203,19 @@ public class Hot100SolutionTest {
         solution.moveZeroes(array);
         assertArrayEquals(new int[] {1,3,12,0,0}, array);
     }
+
+    @Test
+    public void subarraySum() {
+        assertEquals(2, solution.subarraySum(new int[] {1,1,1}, 2));
+        assertEquals(2, solution.subarraySum(new int[] {1,2,3}, 3));
+        assertEquals(3, solution.subarraySum(new int[] {1,-1,0}, 0));
+    }
+
+    @Test
+    public void findAnagrams() {
+        assertEquals(Arrays.asList(0, 6), solution.findAnagrams("cbaebabacd", "abc"));
+        assertEquals(Arrays.asList(0, 1, 2), solution.findAnagrams("abab", "ab"));
+        assertEquals(Arrays.asList(), solution.findAnagrams("abab", "e"));
+        assertEquals(Arrays.asList(0), solution.findAnagrams("e", "e"));
+    }
 }
