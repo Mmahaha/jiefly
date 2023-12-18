@@ -748,6 +748,43 @@ public class Hot100Solution {
         return res;
     }
 
+    // 189. 轮转数组    todo need review
+    public void rotate(int[] nums, int k) {
+        k %= nums.length;
+        if (k == 0) {return;}
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    public void rotate2(int[] nums, int k) {
+        int n = nums.length;
+        k %= n;
+        int cnt = 0, start = 0, temp, cur, next, prev;
+        while (cnt < n) {
+            cur = start;
+            prev = nums[cur];
+            do {
+                next = (cur + k) % n;
+                temp = nums[next];
+                nums[next] = prev;
+                prev = temp;
+                cur = next;
+                cnt++;
+            } while (cur != start);
+            start++;
+        }
+    }
 
     private static class Node {
         Node prev;
