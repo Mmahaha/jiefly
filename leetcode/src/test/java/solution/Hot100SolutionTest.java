@@ -218,4 +218,14 @@ public class Hot100SolutionTest {
         assertEquals(Arrays.asList(), solution.findAnagrams("abab", "e"));
         assertEquals(Arrays.asList(0), solution.findAnagrams("e", "e"));
     }
+
+    @Test
+    public void setZeroes() {
+        int[][] array = new int[][]{{0,1,2,0},{3,4,5,2},{1,3,1,5}};
+        solution.setZeroes(array);
+        assertArrayEquals(new int[][]{{0,0,0,0},{0,4,5,0},{0,3,1,0}}, array);
+        int[][] array2 = new int[][]{{1,0,3}};
+        solution.setZeroes(array2);
+        assertArrayEquals(new int[][]{{0,0,0}}, array2);
+    }
 }

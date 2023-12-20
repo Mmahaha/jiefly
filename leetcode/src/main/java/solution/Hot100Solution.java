@@ -786,6 +786,66 @@ public class Hot100Solution {
         }
     }
 
+    // 238. 除自身以外数组的乘积
+    public int[] productExceptSelf(int[] nums) {
+        int[] left = new int[nums.length];
+        left[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            left[i] = left[i - 1] * nums[i - 1];
+        }
+        int[] right = new int[nums.length];
+        right[nums.length - 1] = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            right[i] = right[i + 1] * nums[i + 1];
+        }
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = left[i] * right[i];
+        }
+        return res;
+    }
+
+    // 73.矩阵置零
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean firstColumnZero = false, firstRowZero = false;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                    firstColumnZero |= (j == 0);
+                    firstRowZero |= (i == 0);
+                }
+            }
+        }
+
+        for (int i = 1; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < n; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            if (matrix[0][i] == 0) {
+                for (int j = 1; j < m; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        if (firstColumnZero) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        if (firstRowZero) {
+            Arrays.fill(matrix[0], 0);
+        }
+    }
+
     private static class Node {
         Node prev;
         Node next;
