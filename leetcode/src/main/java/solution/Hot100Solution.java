@@ -1,5 +1,7 @@
 package solution;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -844,6 +846,55 @@ public class Hot100Solution {
         if (firstRowZero) {
             Arrays.fill(matrix[0], 0);
         }
+    }
+
+    // 54. 螺旋矩阵
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int curLength = matrix[0].length, curWidth = matrix.length, resCnt = curLength * curWidth;
+        List<Integer> res = new ArrayList<>(resCnt);
+        int row = 0, col = -1;
+        while (true) {
+            for (int i = 0; i < curLength; i++) {
+                res.add(matrix[row][++col]);
+            }
+            if (res.size() == resCnt) {break;}
+            for (int i = 0; i < curWidth - 1; i++) {
+                res.add(matrix[++row][col]);
+            }
+            if (res.size() == resCnt) {break;}
+            for (int i = 0; i < curLength - 1; i++) {
+                res.add(matrix[row][--col]);
+            }
+            if (res.size() == resCnt) {break;}
+            for (int i = 0; i < curWidth - 2; i++) {
+                res.add(matrix[--row][col]);
+            }
+            if (res.size() == resCnt) {break;}
+            curLength -= 2;
+            curWidth -= 2;
+        }
+        return res;
+    }
+
+    // 240. 搜索二维矩阵 II
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (target < matrix[0][0] || target > matrix[matrix.length - 1][matrix[0].length - 1]) {
+            return false;
+        }
+        return _searchMatrix(matrix, target, 0, matrix[0].length - 1);
+    }
+
+    private boolean _searchMatrix(int[][] matrix, int target, int x, int y) {
+        if (x >= matrix.length || y < 0) {
+            return false;
+        }
+        if (matrix[x][y] == target) {
+            return true;
+        }
+        if (matrix[x][y] > target) {
+            return _searchMatrix(matrix, target, x, y - 1);
+        }
+        return _searchMatrix(matrix, target, x + 1, y);
     }
 
     private static class Node {
