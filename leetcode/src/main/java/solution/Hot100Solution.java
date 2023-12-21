@@ -878,10 +878,18 @@ public class Hot100Solution {
 
     // 240. 搜索二维矩阵 II
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (target < matrix[0][0] || target > matrix[matrix.length - 1][matrix[0].length - 1]) {
-            return false;
+        int row = 0, col = matrix[0].length - 1;
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] == target) {
+                return true;
+            }
+            if (matrix[row][col] > target) {
+                col --;
+            } else {
+                row ++;
+            }
         }
-        return _searchMatrix(matrix, target, 0, matrix[0].length - 1);
+        return false;
     }
 
     private boolean _searchMatrix(int[][] matrix, int target, int x, int y) {
