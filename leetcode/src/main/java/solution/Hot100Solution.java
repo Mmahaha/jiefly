@@ -905,6 +905,16 @@ public class Hot100Solution {
         return _searchMatrix(matrix, target, x + 1, y);
     }
 
+    // 160. 相交链表
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode iterA = headA, iterB = headB;
+        while (iterA != iterB) {
+            iterA = iterA == null ? headB : iterA.next;
+            iterB = iterB == null ? headA : iterB.next;
+        }
+        return iterA;
+    }
+
     private static class Node {
         Node prev;
         Node next;
