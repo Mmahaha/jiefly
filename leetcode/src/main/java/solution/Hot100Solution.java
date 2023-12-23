@@ -951,6 +951,19 @@ public class Hot100Solution {
         return prev;
     }
 
+    // 141. 环形链表
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static class Node {
         Node prev;
         Node next;
