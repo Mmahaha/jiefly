@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -913,6 +914,41 @@ public class Hot100Solution {
             iterB = iterB == null ? headA : iterB.next;
         }
         return iterA;
+    }
+
+    // 234. 回文链表
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode secHead;
+        if (fast == null) {
+            secHead = reverseLinkedList(slow);
+        } else {
+            secHead = reverseLinkedList(slow.next);
+        }
+        ListNode iter1 = head, iter2 = secHead;
+        while (iter1 != null && iter2 != null) {
+            if (iter1.val != iter2.val) {
+                return false;
+            }
+            iter1 = iter1.next;
+            iter2 = iter2.next;
+        }
+        return true;
+    }
+
+    private ListNode reverseLinkedList(ListNode head) {
+        ListNode prev = null, cur = head, next;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
     }
 
     private static class Node {
