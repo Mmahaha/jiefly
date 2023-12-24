@@ -1,5 +1,10 @@
 package linkedlist;
 
+import solution.Hot100Solution;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LinkedListSolution {
 
     // 203. 移除链表元素
@@ -109,6 +114,42 @@ public class LinkedListSolution {
         return null;
     }
 
+
+    // 138. 随机链表的复制
+    public Node copyRandomList(Node head) {
+        Node newDummyNode = new Node(-1), newIter = newDummyNode;
+        Node oldDummyNode = new Node(-1), oldIter = oldDummyNode;
+        Map<Node, Node> nodeMap = new HashMap<>(16);
+        oldDummyNode.next = head;
+        while (oldIter.next != null) {
+            Node nextOldNode = oldIter.next;
+            Node nextNewNode = new Node(nextOldNode.val);
+            newIter.next = nextNewNode;
+            nodeMap.put(nextOldNode, nextNewNode);
+            newIter = nextNewNode;
+            oldIter = oldIter.next;
+        }
+        oldIter = head;
+        newIter = newDummyNode.next;
+        while (oldIter != null) {
+            newIter.random = nodeMap.get(oldIter.random);
+            oldIter = oldIter.next;
+            newIter = newIter.next;
+        }
+        return newDummyNode.next;
+    }
+
+    class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
 
     public static class ListNode {
         public int val;
