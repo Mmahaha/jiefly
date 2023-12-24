@@ -116,27 +116,19 @@ public class LinkedListSolution {
 
 
     // 138. 随机链表的复制
+    private final Map<Node, Node> nodeMap = new HashMap<>(16);
     public Node copyRandomList(Node head) {
-        Node newDummyNode = new Node(-1), newIter = newDummyNode;
-        Node oldDummyNode = new Node(-1), oldIter = oldDummyNode;
-        Map<Node, Node> nodeMap = new HashMap<>(16);
-        oldDummyNode.next = head;
-        while (oldIter.next != null) {
-            Node nextOldNode = oldIter.next;
-            Node nextNewNode = new Node(nextOldNode.val);
-            newIter.next = nextNewNode;
-            nodeMap.put(nextOldNode, nextNewNode);
-            newIter = nextNewNode;
-            oldIter = oldIter.next;
+        if (head == null) {
+            return null;
         }
-        oldIter = head;
-        newIter = newDummyNode.next;
-        while (oldIter != null) {
-            newIter.random = nodeMap.get(oldIter.random);
-            oldIter = oldIter.next;
-            newIter = newIter.next;
+        if (nodeMap.containsKey(head)) {
+            return nodeMap.get(head);
         }
-        return newDummyNode.next;
+        Node newNode = new Node(head.val);
+        nodeMap.put(head, newNode);
+        newNode.next = copyRandomList(head.next);
+        newNode.random = copyRandomList(head.random);
+        return newNode;
     }
 
     class Node {
