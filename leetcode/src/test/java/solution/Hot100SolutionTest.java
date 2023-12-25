@@ -2,7 +2,6 @@ package solution;
 
 import org.junit.Before;
 import org.junit.Test;
-import solution.Hot100Solution;
 import util.JUtils;
 
 import java.util.Arrays;
@@ -149,8 +148,8 @@ public class Hot100SolutionTest {
 
     @Test
     public void merge() {
-        System.out.println(Arrays.deepToString(solution.merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
-        System.out.println(Arrays.deepToString(solution.merge(new int[][]{{1, 4}, {2, 3}})));
+        System.out.println(Arrays.deepToString(solution.mergeListNode(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+        System.out.println(Arrays.deepToString(solution.mergeListNode(new int[][]{{1, 4}, {2, 3}})));
     }
 
     @Test
@@ -234,5 +233,12 @@ public class Hot100SolutionTest {
         System.out.println(null != null);
         int[][] matrix = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
         assertTrue(solution.searchMatrix(matrix, 5));
+    }
+
+    @Test
+    public void sortList() {
+        ListNode listNode = JUtils.buildListNode(new int[]{4, 2, 1, 3});
+        ListNode sorted = solution.sortList(listNode);
+        assertArrayEquals(new int[]{1, 2, 3, 4}, JUtils.nodesToArray(sorted));
     }
 }

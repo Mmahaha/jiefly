@@ -1,7 +1,5 @@
 package solution;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -443,7 +440,7 @@ public class Hot100Solution {
     }
 
     // 56.合并区间
-    public int[][] merge(int[][] intervals) {
+    public int[][] mergeListNode(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
         LinkedList<int[]> result = new LinkedList<>();
         result.add(intervals[0]);
@@ -984,6 +981,51 @@ public class Hot100Solution {
         }
         return null;
     }
+
+    // 148. 排序链表
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode midNode = findMidNode(head);
+        ListNode right = midNode.next;
+        midNode.next = null;
+        ListNode leftPartSorted = sortList(head);
+        ListNode rightPartSorted = sortList(right);
+        return mergeListNode(leftPartSorted, rightPartSorted);
+    }
+
+    private ListNode mergeListNode(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode iter = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                iter.next = l1;
+                l1 = l1.next;
+            } else {
+                iter.next = l2;
+                l2 = l2.next;
+            }
+            iter = iter.next;
+        }
+        if (l1 != null) {
+            iter.next = l1;
+        }
+        if (l2 != null) {
+            iter.next = l2;
+        }
+        return dummy.next;
+    }
+
+    private ListNode findMidNode(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
 
     private static class Node {
         Node prev;
