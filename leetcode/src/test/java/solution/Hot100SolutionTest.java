@@ -241,4 +241,11 @@ public class Hot100SolutionTest {
         ListNode sorted = solution.sortList(listNode);
         assertArrayEquals(new int[]{1, 2, 3, 4}, JUtils.nodesToArray(sorted));
     }
+
+    @Test
+    public void sortList2() {
+        ListNode listNode = JUtils.buildListNode(new int[]{-1,5,3,4,0});
+        ListNode sorted = solution.sortList2(listNode);
+        assertArrayEquals(new int[]{-1,0,3,4,5}, JUtils.nodesToArray(sorted));
+    }
 }

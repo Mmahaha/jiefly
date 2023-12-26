@@ -1026,6 +1026,45 @@ public class Hot100Solution {
         return slow;
     }
 
+    // 148. 排序链表    迭代法
+    public ListNode sortList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        int length = 0;
+        ListNode iter = head, dummy = new ListNode(-1);
+        dummy.next = head;
+        while (iter != null) {
+            length++;
+            iter = iter.next;
+        }
+        for (int step = 1; step < length; step <<= 1) {
+            ListNode cur = dummy.next;
+            ListNode dummyIter = dummy;
+            while (cur != null) {
+                ListNode left = cur;
+                ListNode right = split(left, step);
+                cur = split(right, step);
+                dummyIter.next = mergeListNode(left, right);
+                while (dummyIter.next != null) {
+                    dummyIter = dummyIter.next;
+                }
+            }
+        }
+        return dummy.next;
+    }
+
+    // 切割链表head
+    private ListNode split(ListNode head, int maxCnt) {
+        if (head == null) {return null;}
+        while (head.next != null && --maxCnt > 0) {
+            head = head.next;
+        }
+        ListNode res = head.next;
+        head.next = null;
+        return res;
+    }
+
 
     private static class Node {
         Node prev;
