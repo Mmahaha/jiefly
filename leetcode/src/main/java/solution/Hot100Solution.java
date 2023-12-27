@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
@@ -1062,6 +1063,40 @@ public class Hot100Solution {
         }
         ListNode res = head.next;
         head.next = null;
+        return res;
+    }
+
+    // 104. 二叉树的最大深度
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+
+
+    // 104. 二叉树的最大深度，循环版本
+    public int maxDepth2(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        int res = 0;
+        if (root != null) {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            int curLevelNodeCnt = queue.size();
+            while (--curLevelNodeCnt >= 0) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            res++;
+        }
         return res;
     }
 
