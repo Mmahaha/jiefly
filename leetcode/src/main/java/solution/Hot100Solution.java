@@ -1100,6 +1100,19 @@ public class Hot100Solution {
         return res;
     }
 
+    // 226. 翻转二叉树
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        root.left = invertTree(root.left);
+        root.right = invertTree(root.right);
+        TreeNode buf = root.left;
+        root.left = root.right;
+        root.right = buf;
+        return root;
+    }
+
 
     private static class Node {
         Node prev;
