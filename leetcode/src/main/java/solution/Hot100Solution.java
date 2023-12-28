@@ -1132,6 +1132,31 @@ public class Hot100Solution {
         return false;
     }
 
+    // 102. 二叉树的层序遍历
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>(10);
+        if (root != null) {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            int curLevelCnt = queue.size();
+            List<Integer> subList = new ArrayList<>(curLevelCnt);
+            while (--curLevelCnt >= 0) {
+                TreeNode pollNode = queue.poll();
+                subList.add(pollNode.val);
+                if (pollNode.left != null) {
+                    queue.offer(pollNode.left);
+                }
+                if (pollNode.right != null) {
+                    queue.offer(pollNode.right);
+                }
+            }
+            res.add(subList);
+        }
+        return res;
+    }
+
 
     private static class Node {
         Node prev;
