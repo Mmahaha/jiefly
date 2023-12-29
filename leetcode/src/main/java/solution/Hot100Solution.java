@@ -1157,6 +1157,22 @@ public class Hot100Solution {
         return res;
     }
 
+    // 108. 将有序数组转换为二叉搜索树
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return _sortedArrayToBST(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode _sortedArrayToBST(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = (start + end) >> 1;
+        TreeNode curNode = new TreeNode(nums[mid]);
+        curNode.left = _sortedArrayToBST(nums, start, mid - 1);
+        curNode.right = _sortedArrayToBST(nums, mid + 1, end);
+        return curNode;
+    }
+
 
     private static class Node {
         Node prev;
