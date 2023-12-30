@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 import static linkedlist.LinkedListSolution.ListNode;
+import static solution.MySolution.TreeNode;
 
 public class Hot100SolutionTest {
 
@@ -247,5 +248,13 @@ public class Hot100SolutionTest {
         ListNode listNode = JUtils.buildListNode(new int[]{-1,5,3,4,0});
         ListNode sorted = solution.sortList2(listNode);
         assertArrayEquals(new int[]{-1,0,3,4,5}, JUtils.nodesToArray(sorted));
+    }
+
+    @Test
+    public void isValidBST() {
+        TreeNode root = new TreeNode(2);
+        root.left = new TreeNode(1);
+        root.right = new TreeNode(3);
+        assertTrue(solution.isValidBST(root));
     }
 }

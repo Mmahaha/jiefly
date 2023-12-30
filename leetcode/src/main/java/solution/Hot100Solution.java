@@ -10,9 +10,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -1171,6 +1173,19 @@ public class Hot100Solution {
         curNode.left = _sortedArrayToBST(nums, start, mid - 1);
         curNode.right = _sortedArrayToBST(nums, mid + 1, end);
         return curNode;
+    }
+
+    // 98. 验证二叉搜索树
+    public boolean isValidBST(TreeNode root) {
+        return _isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean _isValidBST(TreeNode root, long min, long max) {
+        if (root == null) {
+            return true;
+        }
+        return _isValidBST(root.left, min, root.val) && _isValidBST(root.right, root.val, max)
+                && root.val > min && root.val < max;
     }
 
 
