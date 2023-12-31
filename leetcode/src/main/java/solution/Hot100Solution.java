@@ -1188,6 +1188,18 @@ public class Hot100Solution {
                 && root.val > min && root.val < max;
     }
 
+    // 230. 二叉搜索树中第K小的元素
+    private int cur = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) {
+            return -1;
+        }
+        int resBuf;
+        if ((resBuf = kthSmallest(root.left, k)) >= 0) {return resBuf;}
+        if (++cur == k) {return root.val;}
+        return kthSmallest(root.right, k);
+    }
+
 
     private static class Node {
         Node prev;
