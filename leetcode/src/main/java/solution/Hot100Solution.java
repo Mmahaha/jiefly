@@ -1200,6 +1200,30 @@ public class Hot100Solution {
         return kthSmallest(root.right, k);
     }
 
+    // 199. 二叉树的右视图
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>(10);
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            TreeNode node = null;
+            while (--size >= 0) {
+                node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            res.add(node.val);
+        }
+        return res;
+    }
+
 
     private static class Node {
         Node prev;
