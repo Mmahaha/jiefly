@@ -1,5 +1,7 @@
 package solution;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1223,6 +1225,32 @@ public class Hot100Solution {
         }
         return res;
     }
+
+    // 114. 二叉树展开为链表
+    public void flatten(TreeNode root) {
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        List<TreeNode> list = new ArrayList<>();
+        if (root != null) {
+            stack.push(root);
+        }
+        TreeNode prev = null;
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.poll();
+            if (prev != null) {
+                prev.left = null;
+                prev.right = node;
+            }
+            list.add(node);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            prev = node;
+        }
+    }
+
 
 
     private static class Node {
