@@ -1251,7 +1251,30 @@ public class Hot100Solution {
         }
     }
 
+    // 105. 从前序与中序遍历序列构造二叉树
+    private Map<Integer, Integer> valIndexMap = new HashMap<>(2048);
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+           valIndexMap.put(inorder[i], i);
+        }
+        return _buildTree(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+    }
 
+    private TreeNode _buildTree(int[] preorder, int[] inorder, int preStartIndex, int preEndIndex,
+                               int inStartIndex, int inEndIndex) {
+        if (preStartIndex > preEndIndex || inStartIndex > inEndIndex) {
+            return null;
+        }
+        int curVal = preorder[preStartIndex];
+        TreeNode cur = new TreeNode(curVal);
+        int rootIndex = valIndexMap.get(curVal);
+        int leftSize = rootIndex - inStartIndex;
+        cur.left = _buildTree(preorder, inorder, preStartIndex + 1, preEndIndex + leftSize,
+                inStartIndex, inStartIndex + leftSize - 1);
+        cur.right = _buildTree(preorder, inorder, preStartIndex + 1 + leftSize, preEndIndex,
+                rootIndex + 1, inEndIndex);
+        return cur;
+    }
 
     private static class Node {
         Node prev;
