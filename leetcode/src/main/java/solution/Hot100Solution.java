@@ -1276,6 +1276,34 @@ public class Hot100Solution {
         return cur;
     }
 
+    // 437. 路径总和 III
+    private int pathSumRes = 0;
+    public int pathSum(TreeNode root, int targetSum) {
+        dfs1(root, targetSum);
+        return pathSumRes;
+    }
+
+    public void dfs1(TreeNode root, int targetSum) {
+        if (root == null) {
+            return;
+        }
+        dfs2(root, 0, targetSum);
+        dfs1(root.left, targetSum);
+        dfs1(root.right, targetSum);
+    }
+
+    public void dfs2(TreeNode root, long sum, int targetSum) {
+        if (root == null) {
+            return;
+        }
+        sum += root.val;
+        if (sum == targetSum) {
+            pathSumRes ++;
+        }
+        dfs2(root.left, sum, targetSum);
+        dfs2(root.right, sum, targetSum);
+    }
+
     private static class Node {
         Node prev;
         Node next;

@@ -257,4 +257,11 @@ public class Hot100SolutionTest {
         root.right = new TreeNode(3);
         assertTrue(solution.isValidBST(root));
     }
+
+    @Test
+    public void pathSum() {
+        TreeNode root = new TreeNode(-2);
+        root.right = new TreeNode(-3);
+        assertEquals(1, solution.pathSum(root, -5));
+    }
 }
