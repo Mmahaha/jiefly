@@ -264,4 +264,10 @@ public class Hot100SolutionTest {
         root.right = new TreeNode(-3);
         assertEquals(1, solution.pathSum(root, -5));
     }
+
+    @Test
+    public void pathSum2() {
+        TreeNode node = JUtils.arrayToTreeNode(new Integer[]{10, 5, -3, 3, 2, null, 11, 3, -2, null, 1});
+        assertEquals(3, solution.pathSum2(node, 8));
+    }
 }

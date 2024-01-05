@@ -1304,6 +1304,30 @@ public class Hot100Solution {
         dfs2(root.right, sum, targetSum);
     }
 
+    private final Map<Long, Integer> sumCountMap = new HashMap<>(16);
+    private int pathSum2Res = 0;
+    private long targetSum = -1;
+    public int pathSum2(TreeNode root, int _targetSum) {
+        if (root == null) {return 0;}
+        targetSum = _targetSum;
+        sumCountMap.put(0L, 1);
+        _pathSum2(root, root.val);
+        return pathSum2Res;
+    }
+
+    public void _pathSum2(TreeNode root, long curSum) {
+        pathSum2Res += sumCountMap.getOrDefault((curSum - targetSum), 0);
+        sumCountMap.compute(curSum, (sum, cnt) -> cnt == null ? 1 : cnt + 1);
+        if (root.left != null) {
+            _pathSum2(root.left, curSum + root.left.val);
+        }
+        if (root.right != null) {
+            _pathSum2(root.right, curSum + root.right.val);
+        }
+        sumCountMap.compute(curSum, (sum, cnt) -> cnt - 1);
+    }
+
+
     private static class Node {
         Node prev;
         Node next;

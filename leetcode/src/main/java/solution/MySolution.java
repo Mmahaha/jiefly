@@ -163,8 +163,8 @@ public class MySolution {
     }
 
     public static class TreeNode {
-        protected TreeNode left;
-        protected TreeNode right;
+        public TreeNode left;
+        public TreeNode right;
         protected int val;
 
         public TreeNode(int val) {

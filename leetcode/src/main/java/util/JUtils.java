@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static solution.MySolution.TreeNode;
+
 public class JUtils {
     /**
      * 解析一个文本文件为二维数组，格式为lc里的格式，形如[[1,2,3],[2,3,4]]
@@ -67,5 +69,36 @@ public class JUtils {
             node = node.next;
         }
         return Stream.of(valList.toArray()).mapToInt(i-> (int) i).toArray();
+    }
+
+    public static TreeNode arrayToTreeNode(Integer[] array) {
+        if (array == null || array.length == 0 || array[0] == null) {
+            return null;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(array[0]);
+        queue.offer(root);
+
+        int i = 1;
+        while (i < array.length) {
+            TreeNode current = queue.poll();
+
+            Integer leftValue = array[i++];
+            if (leftValue != null) {
+                current.left = new TreeNode(leftValue);
+                queue.offer(current.left);
+            }
+
+            if (i < array.length) {
+                Integer rightValue = array[i++];
+                if (rightValue != null) {
+                    current.right = new TreeNode(rightValue);
+                    queue.offer(current.right);
+                }
+            }
+        }
+
+        return root;
     }
 }
