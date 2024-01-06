@@ -11,10 +11,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
@@ -1327,6 +1329,56 @@ public class Hot100Solution {
         sumCountMap.compute(curSum, (sum, cnt) -> cnt - 1);
     }
 
+
+    // 236. 二叉树的最近公共祖先
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        LinkedList<TreeNode> pPath = new LinkedList<>();
+        LinkedList<TreeNode> qPath = new LinkedList<>();
+        _findPath(root, p, q, pPath, qPath, new AtomicBoolean(false),new AtomicBoolean(false));
+        ListIterator<TreeNode> pPathIter = pPath.listIterator(pPath.size());
+        ListIterator<TreeNode> qPathIter = qPath.listIterator(qPath.size());
+        TreeNode res = null;
+        while (pPathIter.hasPrevious() && qPathIter.hasPrevious()) {
+            TreeNode pNext = pPathIter.previous();
+            TreeNode qNext = qPathIter.previous();
+            if (pNext == qNext) {
+                res = pNext;
+            } else {
+                break;
+            }
+        }
+        return res;
+    }
+
+    private void _findPath(TreeNode cur, TreeNode p, TreeNode q, LinkedList<TreeNode> pPath,
+                           LinkedList<TreeNode> qPath, AtomicBoolean pFound, AtomicBoolean qFound) {
+        if (cur == null) {
+            return;
+        }
+        if (!pFound.get()) {
+            pPath.push(cur);
+            if (cur == p) {
+                pFound.set(true);
+            }
+        }
+        if (!qFound.get()) {
+            qPath.push(cur);
+            if (cur == q) {
+                qFound.set(true);
+            }
+        }
+        if (pFound.get() && qFound.get()) {
+            return;
+        }
+        _findPath(cur.left, p, q, pPath, qPath, pFound, qFound);
+        _findPath(cur.right, p, q, pPath, qPath, pFound, qFound);
+        if (!pFound.get()) {
+            pPath.pop();
+        }
+        if (!qFound.get()) {
+            qPath.pop();
+        }
+    }
 
     private static class Node {
         Node prev;

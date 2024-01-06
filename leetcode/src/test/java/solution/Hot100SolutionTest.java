@@ -270,4 +270,10 @@ public class Hot100SolutionTest {
         TreeNode node = JUtils.arrayToTreeNode(new Integer[]{10, 5, -3, 3, 2, null, 11, 3, -2, null, 1});
         assertEquals(3, solution.pathSum2(node, 8));
     }
+
+    @Test
+    public void lowestCommonAncestor() {
+        TreeNode node = JUtils.arrayToTreeNode(new Integer[]{3, 5, 1, 6, 2, 0, 8, null, null, 7, 4});
+        assertEquals(node.left, solution.lowestCommonAncestor(node, node.left, node.left.right.right));
+    }
 }
