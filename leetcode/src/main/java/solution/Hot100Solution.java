@@ -1380,6 +1380,25 @@ public class Hot100Solution {
         }
     }
 
+    // 118. 杨辉三角
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        res.add(Collections.singletonList(1));
+        for (int i = 1; i < numRows; i++) {
+            List<Integer> lastRow = res.get(i - 1);
+            List<Integer> curRow = new ArrayList<>(i + 1);
+            for (int j = 0; j < i + 1; j++) {
+                if (j == 0 || j == i) {
+                    curRow.add(1);
+                } else {
+                    curRow.add(lastRow.get(j - 1) + lastRow.get(j));
+                }
+            }
+            res.add(curRow);
+        }
+        return res;
+    }
+
     private static class Node {
         Node prev;
         Node next;
