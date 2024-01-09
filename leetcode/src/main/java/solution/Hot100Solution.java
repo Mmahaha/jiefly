@@ -1424,6 +1424,26 @@ public class Hot100Solution {
         return res;
     }
 
+    // 74. 搜索二维矩阵
+    public boolean searchMatrix1(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0, right = m * n - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            int x = mid / n, y = mid % n;
+            if (matrix[x][y] == target) {
+                return true;
+            }
+            if (matrix[x][y] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
+    }
+
     private static class Node {
         Node prev;
         Node next;
