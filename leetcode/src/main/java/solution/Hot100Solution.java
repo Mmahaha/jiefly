@@ -1454,6 +1454,19 @@ public class Hot100Solution {
         return res;
     }
 
+    // 45. 跳跃游戏 II
+    public int jump(int[] nums) {
+        int end = 0, maxPosition = 0, res = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == end) {
+                res++;
+                end = maxPosition;
+            }
+        }
+        return res;
+    }
+
     private static class Node {
         Node prev;
         Node next;
