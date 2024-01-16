@@ -276,4 +276,9 @@ public class Hot100SolutionTest {
         TreeNode node = JUtils.arrayToTreeNode(new Integer[]{3, 5, 1, 6, 2, 0, 8, null, null, 7, 4});
         assertEquals(node.left, solution.lowestCommonAncestor(node, node.left, node.left.right.right));
     }
+
+    @Test
+    public void coinChange() {
+        assertEquals(8, solution.coinChange(new int[]{474,83,404,3}, 264));
+    }
 }
