@@ -1510,6 +1510,22 @@ public class Hot100Solution {
         return dp[amount];
     }
 
+    // 139. 单词拆分
+    public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet<String> wordDictSet = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[i] |= dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
+
     private static class Node {
         Node prev;
         Node next;
