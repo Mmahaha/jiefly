@@ -281,4 +281,10 @@ public class Hot100SolutionTest {
     public void coinChange() {
         assertEquals(8, solution.coinChange(new int[]{474,83,404,3}, 264));
     }
+
+    @Test
+    public void lengthOfLIS() {
+        assertEquals(4, solution.lengthOfLIS(new int[] {10,9,2,5,3,7,101,18}));
+        assertEquals(6, solution.lengthOfLIS(new int[] {1,3,6,7,9,4,10,5,6}));
+    }
 }

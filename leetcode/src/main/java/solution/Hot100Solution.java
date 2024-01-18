@@ -1525,6 +1525,38 @@ public class Hot100Solution {
         return dp[s.length()];
     }
 
+    // 300. 最长递增子序列
+    public int lengthOfLIS(int[] nums) {
+        // dp[i] -> 以i为结尾的LIS长度
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        int res = -1;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    public int lengthOfLIS2(int[] nums) {
+        int[] dp = new int[nums.length];
+        int len = 0;
+        for (int num : nums) {
+            int index = Arrays.binarySearch(dp, 0, len, num);
+            if (index < 0) {
+                index = -index - 1;
+            }
+            dp[index] = num;
+            if (index == len) {
+                len++;
+            }
+        }
+        return len;
+    }
 
     private static class Node {
         Node prev;
