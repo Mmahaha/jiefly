@@ -287,4 +287,10 @@ public class Hot100SolutionTest {
         assertEquals(4, solution.lengthOfLIS(new int[] {10,9,2,5,3,7,101,18}));
         assertEquals(6, solution.lengthOfLIS(new int[] {1,3,6,7,9,4,10,5,6}));
     }
+
+    @Test
+    public void canPartition() {
+        assertTrue(solution.canPartition(new int[] {3,3,3,4,5}));
+        assertFalse(solution.canPartition(new int[] {1,2,5}));
+    }
 }

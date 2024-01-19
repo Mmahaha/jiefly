@@ -1573,6 +1573,26 @@ public class Hot100Solution {
         return res;
     }
 
+    // 416. 分割等和子集
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if ((sum & 1) == 1) {
+            return false;
+        }
+        int targetSum = sum >> 1;
+        boolean[] dp = new boolean[targetSum + 1];
+        dp[0] = true;
+        for (int num : nums) {
+            for (int i = targetSum; i >= num; i--) {
+                dp[i] |= dp[i - num];
+            }
+        }
+        return dp[targetSum];
+    }
+
     private static class Node {
         Node prev;
         Node next;
