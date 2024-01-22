@@ -1613,6 +1613,30 @@ public class Hot100Solution {
         return dp[text1.length() - 1][text2.length() - 1];
     }
 
+    // 153. 寻找旋转排序数组中的最小值
+    public int findMin(int[] nums) {
+        if (nums[0] <= nums[nums.length - 1]) {
+            return nums[0];
+        }
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int m = (l + r) >> 1;
+            if (m == 0) {return nums[1];}
+            if (nums[m] < nums[m-1] && nums[m] < nums[m+1]) {
+                return nums[m];
+            }
+            if (nums[m] > nums[m-1] && nums[m] > nums[m+1]) {
+                return nums[m+1];
+            }
+            if (nums[m] > nums[0]) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        return -1;
+    }
+
     private static class Node {
         Node prev;
         Node next;
