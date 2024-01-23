@@ -1637,6 +1637,24 @@ public class Hot100Solution {
         return -1;
     }
 
+    // 763. 划分字母区间
+    public List<Integer> partitionLabels(String s) {
+        int[] lastIndex = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+        List<Integer> res = new ArrayList<>();
+        int curStart = 0, curEnd = -1;
+        for (int i = 0; i < s.length(); i++) {
+            curEnd = Math.max(curEnd, lastIndex[s.charAt(i) - 'a']);
+            if (curEnd == i) {
+                res.add(curEnd - curStart + 1);
+                curStart= i + 1;
+            }
+        }
+        return res;
+    }
+
     private static class Node {
         Node prev;
         Node next;
