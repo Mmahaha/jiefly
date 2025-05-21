@@ -4,14 +4,15 @@ import java.util.Random;
 
 public class SortTest {
     public static void main(String[] args) {
-        for (int i = 0; i < 500; i++) {
-            int[] array = generateArray();
-            long start = System.currentTimeMillis();
-            new ISort.QuickSort().sort(array);
-//            Arrays.sort(array);
-            System.out.println(String.format("cost %sms", System.currentTimeMillis() - start));
-            check(array);
-        }
+        int[] array = new int[] {7, 2, 5, 8, 6};
+        new ISort.QuickSort().sort(array);
+//        for (int i = 0; i < 500; i++) {
+//            long start = System.currentTimeMillis();
+//            new ISort.QuickSort().sort(array);
+////            Arrays.sort(array);
+//            System.out.println(String.format("cost %sms", System.currentTimeMillis() - start));
+//            check(array);
+//        }
     }
 
     static int[] generateArray() {

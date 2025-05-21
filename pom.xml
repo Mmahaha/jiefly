@@ -15,6 +15,7 @@
         <module>es</module>
         <module>dubbo</module>
         <module>kafka</module>
+        <module>rabbitmq</module>
     </modules>
 
     <dependencies>
