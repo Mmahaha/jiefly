@@ -1,9 +1,17 @@
 package solution.v2;
 
-import com.mysql.cj.exceptions.CJPacketTooBigException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static linkedlist.LinkedListSolution.ListNode;
 
 public class Hot100Solution {
 
@@ -82,6 +90,250 @@ public class Hot100Solution {
         prefixSumCount.compute(currentSum, (k, v) -> v - 1);
     }
 
+    // 438.找到字符串中所有字母异位词    滑动窗口（固定窗口大小的）
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> result = new ArrayList<>();
+        if (s.length() < p.length()) {
+            return result;
+        }
+        int[] pCnt = new int[26];
+        int letterCnt = 0;  // 有几种不同的字母
+        for (char c : p.toCharArray()) {
+            if (pCnt[c - 'a'] == 0) {
+                letterCnt++;
+            }
+            pCnt[c - 'a']++;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            pCnt[s.charAt(i) - 'a']--;
+            if (pCnt[s.charAt(i) - 'a'] == 0) {
+                letterCnt--;
+            }
+            if (letterCnt == 0) {
+                result.add(i - p.length() + 1);
+            }
+            if (i >= p.length() - 1) {
+                if (pCnt[s.charAt(i - p.length() + 1) - 'a'] == 0) {
+                    letterCnt++;
+                }
+                pCnt[s.charAt(i - p.length() + 1) - 'a']++;
+            }
+        }
+        return result;
+    }
+
+    // 215. 数组中的第K个最大元素
+    public int findKthLargest(int[] nums, int k) {
+        return findKthLargest(nums, 0, nums.length - 1, k - 1);
+    }
+
+    private int findKthLargest(int[] nums, int l, int r, int k) {
+        if (l >= r) {
+            return nums[l];
+        }
+        int pivot = partition(nums, l, r);
+        if (pivot == k) {
+            return nums[k];
+        } else if (pivot > k) {
+            return findKthLargest(nums, l, pivot - 1, k);
+        } else {
+            return findKthLargest(nums, pivot + 1, r, k);
+        }
+    }
+
+    private int partition(int[] nums, int l, int r) {
+        int i = l;
+        int x = nums[r];
+        for (int j = l; j < r; j++) {
+            if (nums[j] >= x) {
+                swap(nums, i++, j);
+            }
+        }
+        swap(nums, i, r);
+        return i;
+    }
+
+    private void swap(int[] nums, int x, int y) {
+        int z = nums[x];
+        nums[x] = nums[y];
+        nums[y] = z;
+    }
+
+    // 141.判断链表中是否存在环
+    public boolean hasCycle(ListNode head) {
+        ListNode quick = head;
+        ListNode slow = head;
+        while (quick != null && quick.next != null && slow != null) {
+            quick = quick.next.next;
+            slow = slow.next;
+            if (quick == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 46.全排列，递归回溯
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(nums, new LinkedList<>(), result);
+        return result;
+    }
+
+    private void dfs(int[] nums, LinkedList<Integer> path, List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int num : nums) {
+            if (path.contains(num)) {
+                continue;
+            }
+            path.addLast(num);
+            dfs(nums, path, result);
+            path.removeLast();
+        }
+    }
+
+    // 62.不同路径
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            dp[0][i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    // 406.根据身高重建队列，先排再插
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, Comparator.<int[]>comparingInt(p -> p[0]).reversed().thenComparing(p -> p[1]));
+        LinkedList<int[]> result = new LinkedList<>();
+        for (int[] person : people) {
+            result.add(person[1], person);
+        }
+        return result.toArray(new int[0][0]);
+    }
+
+    // 300.最长递增子序列，动态规划/贪心+二分查找
+    public int lengthOfLIS(int[] nums) {
+        // 贪心+二分查找，不断的优化结果数组
+        List<Integer> tail= new ArrayList<>(nums.length);
+        for (int num : nums) {
+            int left = 0, right = tail.size() - 1;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                if (num > tail.get(mid)) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            // 这个是举例子算出来的
+            if (left == tail.size()) {
+                // 2,3,4 插入 5
+                tail.add(num);
+            } else if (left == tail.size() - 1) {
+                // 2,3,6 更新为 5
+                // 或者是2,3,6 插入1，更新为1,3,6
+                // 更新是为了防止后面存在更长的子数组，保留更多可能性（实际上对于2,3,6 这个子数组来说，前面已经固定是2,3,6）
+                // 比如2,3,6 插入1,2,3,4 就会把整个数组更新为1,2,3,4
+                tail.set(tail.size() - 1, num);
+            }
+        }
+        return tail.size();
+    }
+
+    // 11.盛最多水的容器，贪心+双指针
+    public int maxArea(int[] height) {
+        int i = 0, j = height.length - 1;
+        int result = -1;
+        while (i <= j) {
+            result = Math.max(result, (j - i) * Math.min(height[i],height[j]));
+            if (height[i] < height[j]) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+        return result;
+    }
+
+    // 76.最小覆盖子串
+    public String minWindow(String s, String t) {
+        int[] tCnt = new int['z' - 'A' + 1];
+        int difLetterCnt = 0;
+        for (char c : t.toCharArray()) {
+            if (tCnt[c-'A']++ == 0) {
+                difLetterCnt++;
+            }
+        }
+        int left = 0, right = 0;
+        int curLetterCnt = 0;
+        String result = "";
+        while (right < s.length()) {
+            while (curLetterCnt < difLetterCnt && right < s.length()) {
+                char c = s.charAt(right++);
+                if(--tCnt[c-'A'] == 0) {
+                    curLetterCnt++;
+                }
+            }
+            if (curLetterCnt < difLetterCnt) {
+                return result;
+            }
+            while (curLetterCnt == difLetterCnt) {
+                char c = s.charAt(left++);
+                if (++tCnt[c-'A'] > 0) {
+                    curLetterCnt--;
+                }
+            }
+            if (result.length() > (right - left + 1) || result.isEmpty()) {
+                result = s.substring(left - 1, right);
+            }
+        }
+        return result;
+    }
+
+    // 309.买卖股票的最佳时机含冷冻期——多组动态规划结合计算
+    public int maxProfit(int[] prices) {
+        int length = prices.length;
+        int[] hold = new int[length];
+        hold[0] = -prices[0];
+        int[] sold = new int[length];
+        int[] freeze = new int[length];
+        for (int i = 1; i < length; i++) {
+            int price = prices[i];
+            hold[i] = Math.max(hold[i - 1], freeze[i - 1] - price);
+            sold[i] = Math.max(sold[i - 1], hold[i - 1] + price);
+            freeze[i] = Math.max(freeze[i - 1], sold[i - 1]);
+        }
+        int result = -1;
+        for (int i = 0; i < length; i++) {
+            result = Math.max(result, Math.max(hold[i], Math.max(sold[i], freeze[i])));
+        }
+        return result;
+    }
+
+    // 226.翻转二叉树
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode buf = root.left;
+        root.left = root.right;
+        root.right = buf;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
 
     public class TreeNode {
         int val;
@@ -100,77 +352,6 @@ public class Hot100Solution {
             this.left = left;
             this.right = right;
         }
-    }
-
-    // 438.找到字符串中所有字母异位词    滑动窗口（固定窗口大小的）
-    public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> result = new ArrayList<>();
-        if (s.length() < p.length()) {
-            return result;
-        }
-        int[] pCnt = new int[26];
-        int letterCnt = 0;  // 有几种不同的字母
-        for (char c : p.toCharArray()) {
-            if (pCnt[c - 'a'] == 0) {
-                letterCnt ++;
-            }
-            pCnt[c - 'a']++;
-        }
-        for (int i = 0; i < s.length(); i++) {
-            pCnt[s.charAt(i) - 'a']--;
-            if (pCnt[s.charAt(i) - 'a'] == 0) {
-                letterCnt --;
-            }
-            if (letterCnt == 0) {
-                result.add(i - p.length() + 1);
-            }
-            if (i >= p.length() - 1) {
-                if (pCnt[s.charAt(i - p.length() + 1) - 'a'] == 0) {
-                    letterCnt++;
-                }
-                pCnt[s.charAt(i - p.length() + 1) - 'a']++;
-            }
-        }
-        return result;
-    }
-
-    // 215. 数组中的第K个最大元素
-    public int findKthLargest(int[] nums, int k) {
-        return findKthLargest(nums, 0, nums.length - 1, nums.length - k);
-    }
-
-    private int findKthLargest(int[] nums, int l, int r, int k) {
-        if (l > r) {
-            return -1;
-        }
-        int pivot = partition(nums, l, r);
-        if (pivot == k) {
-            return nums[pivot];
-        } else if (pivot > k) {
-            return findKthLargest(nums, l, pivot, k);
-        } else {
-            return findKthLargest(nums, pivot + 1, r, k);
-        }
-    }
-
-    private int partition(int[] nums, int l, int r) {
-        int pivot = nums[(l + r) / 2];
-        int m = l - 1;
-        int n = r + 1;
-        while (true) {
-            while (nums[++m] < pivot) {}
-            while (nums[--n] > pivot) {}
-            if (m >= n) {
-                return n;
-            }
-            swap(nums, m, n);
-        }
-    }
-
-    private void swap(int[] nums, int x, int y) {
-        int z = nums[x];
-        nums[x] = nums[y];
-        nums[y] = z;
     }
 
 }

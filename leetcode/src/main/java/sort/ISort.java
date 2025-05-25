@@ -52,14 +52,17 @@ public interface ISort {
             }
         }
 
+        public static void main(String[] args) {
+            new QuickSort().partition(new int[] {3,1,2}, 0, 2);
+        }
 
         private int partition(int[] array, int l, int r) {
-            int x = array[(l + r) >> 1];
+            int x = array[l];
             int i = l - 1;
             int j = r + 1;
             while (true) {
-                while (array[--j] > x) ;
                 while (array[++i] < x) ;
+                while (array[--j] > x) ;
                 if (i < j) {
                     swap(array, i, j);
                 } else {

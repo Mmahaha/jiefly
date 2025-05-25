@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Hot100SolutionTest {
 
@@ -22,6 +22,16 @@ class Hot100SolutionTest {
 
     @Test
     void findKthLargest() {
-        assertEquals(4, solution.findKthLargest(new int[] {3,2,3,1,2,4,5,5,6}, 4));
+        assertEquals(5, solution.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
+    }
+
+    @Test
+    public void lengthOfLIS() {
+        assertEquals(4, solution.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18}));
+    }
+
+    @Test
+    public void minWindow() {
+        assertEquals("a", solution.minWindow("ab", "a"));
     }
 }
