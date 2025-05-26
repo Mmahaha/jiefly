@@ -335,6 +335,30 @@ public class Hot100Solution {
     }
 
 
+    // 461.汉明距离
+    public int hammingDistance(int x, int y) {
+        return Integer.bitCount(x ^ y);
+    }
+
+    // 279.完全平方数：动态规划——完全背包
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            int sqrt = (int) Math.sqrt(i);
+            for (int j = 1; j <= sqrt; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+            }
+        }
+        return dp[n];
+    }
+
+    // 139. 单词拆分
+    public boolean wordBreak(String s, List<String> wordDict) {
+
+    }
+
     public class TreeNode {
         int val;
         TreeNode left;
