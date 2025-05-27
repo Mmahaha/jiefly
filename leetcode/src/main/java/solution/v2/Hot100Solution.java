@@ -354,8 +354,56 @@ public class Hot100Solution {
         return dp[n];
     }
 
-    // 139. 单词拆分
+    // 139. 单词拆分：完全背包问题
     public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j <= i; j++) {
+                if(dp[i] |= dp[j] && wordSet.contains(s.substring(j, i))) {
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
+    // 560.和为K的子数组：前缀和+哈希表，愿称之为经典！
+    public int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> prefixSumCountMap = new HashMap<>();
+        prefixSumCountMap.put(0, 1);
+        int curSum = 0;
+        int result = 0;
+        for (int num : nums) {
+            curSum += num;
+            result += prefixSumCountMap.getOrDefault(curSum - k, 0);
+            prefixSumCountMap.compute(curSum, (s, c) -> c == null ? 1 : c + 1);
+        }
+        return result;
+    }
+
+    // 543.二叉树的直径
+    public int diameterOfBinaryTree(TreeNode root) {
+        AtomicInteger result = new AtomicInteger();
+        depth(root, result);
+        return result.get();
+    }
+
+    public int depth(TreeNode root, AtomicInteger result) {
+        if (root == null) {
+            return 0;
+        }
+        int leftDepth = depth(root.left, result);
+        int rightDepth = depth(root.right, result);
+        if ((leftDepth + rightDepth) > result.get()) {
+            result.set(leftDepth + rightDepth);
+        }
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+
+    // 739.每日温度
+    public int[] dailyTemperatures(int[] temperatures) {
 
     }
 
