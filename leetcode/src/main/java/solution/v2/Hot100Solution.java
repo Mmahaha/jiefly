@@ -225,7 +225,7 @@ public class Hot100Solution {
     // 300.最长递增子序列，动态规划/贪心+二分查找
     public int lengthOfLIS(int[] nums) {
         // 贪心+二分查找，不断的优化结果数组
-        List<Integer> tail= new ArrayList<>(nums.length);
+        List<Integer> tail = new ArrayList<>(nums.length);
         for (int num : nums) {
             int left = 0, right = tail.size() - 1;
             while (left <= right) {
@@ -256,7 +256,7 @@ public class Hot100Solution {
         int i = 0, j = height.length - 1;
         int result = -1;
         while (i <= j) {
-            result = Math.max(result, (j - i) * Math.min(height[i],height[j]));
+            result = Math.max(result, (j - i) * Math.min(height[i], height[j]));
             if (height[i] < height[j]) {
                 i++;
             } else {
@@ -271,7 +271,7 @@ public class Hot100Solution {
         int[] tCnt = new int['z' - 'A' + 1];
         int difLetterCnt = 0;
         for (char c : t.toCharArray()) {
-            if (tCnt[c-'A']++ == 0) {
+            if (tCnt[c - 'A']++ == 0) {
                 difLetterCnt++;
             }
         }
@@ -281,7 +281,7 @@ public class Hot100Solution {
         while (right < s.length()) {
             while (curLetterCnt < difLetterCnt && right < s.length()) {
                 char c = s.charAt(right++);
-                if(--tCnt[c-'A'] == 0) {
+                if (--tCnt[c - 'A'] == 0) {
                     curLetterCnt++;
                 }
             }
@@ -290,7 +290,7 @@ public class Hot100Solution {
             }
             while (curLetterCnt == difLetterCnt) {
                 char c = s.charAt(left++);
-                if (++tCnt[c-'A'] > 0) {
+                if (++tCnt[c - 'A'] > 0) {
                     curLetterCnt--;
                 }
             }
@@ -361,7 +361,7 @@ public class Hot100Solution {
         dp[0] = true;
         for (int i = 1; i <= s.length(); i++) {
             for (int j = 0; j <= i; j++) {
-                if(dp[i] |= dp[j] && wordSet.contains(s.substring(j, i))) {
+                if (dp[i] |= dp[j] && wordSet.contains(s.substring(j, i))) {
                     break;
                 }
             }
@@ -400,6 +400,90 @@ public class Hot100Solution {
             result.set(leftDepth + rightDepth);
         }
         return 1 + Math.max(leftDepth, rightDepth);
+    }
+
+    // 1.两数之和：哈希
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> numIndexMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (numIndexMap.containsKey(target - nums[i])) {
+                return new int[]{numIndexMap.get(target - nums[i]), i};
+            }
+            numIndexMap.put(nums[i], i);
+        }
+        return new int[0];
+    }
+
+    // 20.有效的括号
+    public boolean isValid(String s) {
+        LinkedList<Character> stack = new LinkedList<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                Character pop = stack.pop();
+                if ((c == ')' && pop == '(') || (c == '}' && pop == '{') || (c == ']' && pop == '[')) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    // 21.合并两个有序链表：简单指针
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode();
+        ListNode iter1 = list1, iter2 = list2, resIter = dummy;
+        while (iter1 != null && iter2 != null) {
+            if (iter1.val < iter2.val) {
+                resIter.next = iter1;
+                iter1 = iter1.next;
+            } else {
+                resIter.next = iter2;
+                iter2 = iter2.next;
+            }
+            resIter = resIter.next;
+        }
+        if (iter1 != null) {
+            resIter.next = iter1;
+        }
+        if (iter2 != null) {
+            resIter.next = iter2;
+        }
+        return dummy.next;
+    }
+
+
+    // 70.爬楼梯：简单dp
+    public int climbStairs(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    // 94.二叉树的中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        _inorderTraversal(root, result);
+        return result;
+    }
+
+    private void _inorderTraversal(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        _inorderTraversal(root.left, result);
+        result.add(root.val);
+        _inorderTraversal(root.right, result);
     }
 
     // 739.每日温度
