@@ -486,9 +486,29 @@ public class Hot100Solution {
         _inorderTraversal(root.right, result);
     }
 
-    // 739.每日温度
+    // 739.每日温度：单调栈 ～amazing
     public int[] dailyTemperatures(int[] temperatures) {
+        LinkedList<int[]> stack = new LinkedList<>();
+        int[] result = new int[temperatures.length];
+        for (int i = 0; i < temperatures.length; i++) {
+            if (stack.isEmpty()) {
+                stack.push(new int[]{temperatures[i], i});
+                continue;
+            }
+            while (!stack.isEmpty() && temperatures[i] > stack.peek()[0]) {
+                // 破坏了递减性，需要弹出栈内元素并计算结果
+                int[] pop = stack.pop();
+                result[pop[1]] = i - pop[1];
+            }
+            // 入栈
+            stack.push(new int[] {temperatures[i], i});
+        }
 
+        while (!stack.isEmpty()) {
+            int[] pop = stack.pop();
+            result[pop[1]] = 0;
+        }
+        return result;
     }
 
     public class TreeNode {
