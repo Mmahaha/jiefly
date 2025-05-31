@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class Hot100SolutionTest {
 
@@ -33,5 +35,10 @@ class Hot100SolutionTest {
     @Test
     public void minWindow() {
         assertEquals("a", solution.minWindow("ab", "a"));
+    }
+
+    @Test
+    public void canFinish() {
+        assertFalse(solution.canFinish(8, new int[][]{{1,0},{2,6},{1,7},{5,1},{6,4},{7,0},{0,5}}));
     }
 }

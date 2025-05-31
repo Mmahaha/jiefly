@@ -1,5 +1,7 @@
 package solution.v2;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -510,6 +512,44 @@ public class Hot100Solution {
         }
         return result;
     }
+
+    // 207.课程表 todo按照推荐写法重新写一下
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if (prerequisites.length == 0) {
+            return true;
+        }
+        Map<Integer, List<Integer>> reqMap = new HashMap<>(numCourses);
+        for (int[] prerequisite : prerequisites) {
+            reqMap.putIfAbsent(prerequisite[0], new ArrayList<>());
+            reqMap.get(prerequisite[0]).add(prerequisite[1]);
+            if (prerequisite[0] == prerequisite[1]) {
+                // 这是人类想出来的用例？？
+                return false;
+            }
+        }
+        return _canFinish(reqMap, new HashSet<>(), new HashSet<>(), -1);
+    }
+
+    private boolean _canFinish(Map<Integer, List<Integer>> reqMap, Set<Integer> path, Set<Integer> visited, int curCourse) {
+        if (path.contains(curCourse)) {
+            return false;
+        }
+        if (visited.contains(curCourse)) {
+            return true;
+        }
+        path.add(curCourse);
+        List<Integer> requestCourses = curCourse == -1 ? new ArrayList<>(reqMap.keySet()) : reqMap.getOrDefault(curCourse, new ArrayList<>());
+        for (Integer request : requestCourses) {
+            if (!_canFinish(reqMap, path, visited, request)) {
+                return false;
+            }
+        }
+        visited.add(curCourse);
+        path.remove(curCourse);
+        return true;
+    }
+
+
 
     public class TreeNode {
         int val;
