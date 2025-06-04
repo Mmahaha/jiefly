@@ -513,41 +513,69 @@ public class Hot100Solution {
         return result;
     }
 
-    // 207.课程表 todo按照推荐写法重新写一下
+    // 207.课程表  todo 用bfs写一个
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        if (prerequisites.length == 0) {
-            return true;
-        }
-        Map<Integer, List<Integer>> reqMap = new HashMap<>(numCourses);
+        int[] visited = new int[numCourses];    // 0-unvisited,1-visiting,2-visited
+        Map<Integer, List<Integer>> reqMap = new HashMap<>();
         for (int[] prerequisite : prerequisites) {
-            reqMap.putIfAbsent(prerequisite[0], new ArrayList<>());
-            reqMap.get(prerequisite[0]).add(prerequisite[1]);
-            if (prerequisite[0] == prerequisite[1]) {
-                // 这是人类想出来的用例？？
+            reqMap.putIfAbsent(prerequisite[1], new ArrayList<>());
+            reqMap.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 2) {
+                continue;
+            }
+            if (!_canFinish(reqMap, visited, i)) {
                 return false;
             }
         }
-        return _canFinish(reqMap, new HashSet<>(), new HashSet<>(), -1);
-    }
-
-    private boolean _canFinish(Map<Integer, List<Integer>> reqMap, Set<Integer> path, Set<Integer> visited, int curCourse) {
-        if (path.contains(curCourse)) {
-            return false;
-        }
-        if (visited.contains(curCourse)) {
-            return true;
-        }
-        path.add(curCourse);
-        List<Integer> requestCourses = curCourse == -1 ? new ArrayList<>(reqMap.keySet()) : reqMap.getOrDefault(curCourse, new ArrayList<>());
-        for (Integer request : requestCourses) {
-            if (!_canFinish(reqMap, path, visited, request)) {
-                return false;
-            }
-        }
-        visited.add(curCourse);
-        path.remove(curCourse);
         return true;
     }
+
+    private boolean _canFinish(Map<Integer, List<Integer>> reqMap, int[] visited, int cur) {
+        if (visited[cur] == 1) {
+            return false;
+        }
+        if (visited[cur] == 2) {
+            return true;
+        }
+        visited[cur] = 1;
+        List<Integer> requires = reqMap.getOrDefault(cur, new ArrayList<>());
+        for (Integer require : requires) {
+            if (!_canFinish(reqMap, visited, require)) {
+                return false;
+            }
+        }
+        visited[cur] = 2;
+        return true;
+    }
+
+    // 337. 打家劫舍 III，稍微看了点提示
+    public int rob(TreeNode root) {
+        int[] val = _rob(root);
+        return Math.max(val[0], val[1]);
+    }
+
+    private int[] _rob(TreeNode root) {
+        if (root == null) {
+            return new int[] {0,0};
+        }
+        int[] robLeft = _rob(root.left);
+        int[] robRight = _rob(root.right);
+        int robCur = root.val + robLeft[1] + robRight[1]; // 抢劫当前节点，不能抢左右
+        int notRobCur = Math.max(robLeft[0], robLeft[1]) + Math.max(robRight[0], robRight[1]);
+        return new int[] {robCur, notRobCur};
+    }
+
+    // 136. 只出现一次的数字 ————相同的数字只会出现两次
+    public int singleNumber(int[] nums) {
+        int res = 0;
+        for (int num : nums) {
+            res ^= num;
+        }
+        return res;
+    }
+
 
 
 
