@@ -576,7 +576,76 @@ public class Hot100Solution {
         return res;
     }
 
+    // 234. 回文链表：反转后半部分链表
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast = head, slow = head;
+        // 1,2,3,2,1    slowIndex = 2  -> 1,2,1,2,3
+        // 1,2,3,3,2,1  slowIndex = 3  -> 1,2,3,1,2,3
+        while (fast != null && fast.next != null && slow != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        /*
+         * example: ori:3,2,1   tar:1,2,3
+         * original: 3.next = 2   2.next = 1  1.next = null
+         * target:   1.next = 2   2.next = 3  3.next = null
+         */
+        ListNode iter = slow, prev = null;
+        while (iter != null) {
+            ListNode next = iter.next;
+            iter.next = prev;
+            prev = iter;
+            iter = next;
+        }
+        // compare listNode by head & prev
+        while (prev != null) {
+            if (head.val != prev.val) {
+                return false;
+            }
+            prev = prev.next;
+            head = head.next;
+        }
+        return true;
+    }
 
+    // 152. 乘积最大子数组
+    public int maxProduct(int[] nums) {
+        int[] maxDp = new int[nums.length];
+        int[] minDp = new int[nums.length];
+        maxDp[0] = nums[0];
+        minDp[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            maxDp[i] = Math.max(nums[i], Math.max(maxDp[i-1] * nums[i], minDp[i-1]*nums[i]));
+            minDp[i] = Math.min(nums[i], Math.min(maxDp[i-1] * nums[i], minDp[i-1]*nums[i]));
+        }
+        int result = Integer.MIN_VALUE;
+        for (int r : maxDp) {
+            result = Math.max(result, r);
+        }
+        return result;
+    }
+
+    // 142. 环形链表 II
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head, slow = head;
+        boolean isMeet = false;
+        while (fast != null && fast.next != null && slow != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                isMeet = true;
+                break;
+            }
+        }
+        if (!isMeet) {
+            return null;
+        }
+        while (head != fast) {
+            head = head.next;
+            fast = fast.next;
+        }
+        return fast;
+    }
 
 
     public class TreeNode {
