@@ -503,7 +503,7 @@ public class Hot100Solution {
                 result[pop[1]] = i - pop[1];
             }
             // 入栈
-            stack.push(new int[] {temperatures[i], i});
+            stack.push(new int[]{temperatures[i], i});
         }
 
         while (!stack.isEmpty()) {
@@ -558,13 +558,13 @@ public class Hot100Solution {
 
     private int[] _rob(TreeNode root) {
         if (root == null) {
-            return new int[] {0,0};
+            return new int[]{0, 0};
         }
         int[] robLeft = _rob(root.left);
         int[] robRight = _rob(root.right);
         int robCur = root.val + robLeft[1] + robRight[1]; // 抢劫当前节点，不能抢左右
         int notRobCur = Math.max(robLeft[0], robLeft[1]) + Math.max(robRight[0], robRight[1]);
-        return new int[] {robCur, notRobCur};
+        return new int[]{robCur, notRobCur};
     }
 
     // 136. 只出现一次的数字 ————相同的数字只会出现两次
@@ -615,8 +615,8 @@ public class Hot100Solution {
         maxDp[0] = nums[0];
         minDp[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            maxDp[i] = Math.max(nums[i], Math.max(maxDp[i-1] * nums[i], minDp[i-1]*nums[i]));
-            minDp[i] = Math.min(nums[i], Math.min(maxDp[i-1] * nums[i], minDp[i-1]*nums[i]));
+            maxDp[i] = Math.max(nums[i], Math.max(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
+            minDp[i] = Math.min(nums[i], Math.min(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
         }
         int result = Integer.MIN_VALUE;
         for (int r : maxDp) {
@@ -645,6 +645,115 @@ public class Hot100Solution {
             fast = fast.next;
         }
         return fast;
+    }
+
+    // 79. 单词搜索
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (_exist(board, word, 0, new boolean[m][n], i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean _exist(char[][] board, String word, int matchIndex, boolean[][] visited, int i, int j) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
+            return false;
+        }
+        if (visited[i][j]) {
+            return false;
+        }
+        if (word.charAt(matchIndex) != board[i][j]) {
+            return false;
+        }
+        if (matchIndex == word.length() - 1) {
+            return true;
+        }
+        visited[i][j] = true;
+        boolean result = _exist(board, word, matchIndex + 1, visited, i + 1, j)
+                || _exist(board, word, matchIndex + 1, visited, i - 1, j)
+                || _exist(board, word, matchIndex + 1, visited, i, j + 1)
+                || _exist(board, word, matchIndex + 1, visited, i, j - 1);
+        visited[i][j] = false;
+        return result;
+    }
+
+    // 160.相交链表，还有一种优雅的写法
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int lengthA = 0;
+        int lengthB = 0;
+        ListNode iterA = headA, iterB = headB;
+        while (iterA != null) {
+            lengthA++;
+            iterA = iterA.next;
+        }
+        while (iterB != null) {
+            lengthB++;
+            iterB = iterB.next;
+        }
+        if (lengthA > lengthB) {
+            for (int i = 0; i < lengthA - lengthB; i++) {
+                headA = headA.next;
+            }
+        }
+        if (lengthB > lengthA) {
+            for (int i = 0; i < lengthB - lengthA; i++) {
+                headB = headB.next;
+            }
+        }
+        while (headA != headB) {
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return headA;
+    }
+
+    // 34. 在排序数组中查找元素的第一个和最后一个位置
+    public int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0) {
+            return new int[] {-1, -1};
+        }
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int m = (left + right) / 2;
+            // 1,2,2,3 -> 找左2
+            // 1,2,2,2,3,4 -> 找左2
+            // 1,2,3 -> 找2
+
+            if (nums[m] >= target) {
+                right = m;
+            } else {
+                left = m + 1;
+            }
+        }
+        if (nums[left] != target) {
+            return new int[] {-1, -1};
+        }
+        for (int i = left + 1; i < nums.length; i++) {
+            if (nums[i] != nums[i - 1]) {
+                return new int[]{left, i - 1};
+            }
+        }
+        return new int[] {left, nums.length - 1};
+    }
+
+    // 98. 验证二叉搜索树
+    public boolean isValidBST(TreeNode root) {
+//        if (root == null) {
+//            return true;
+//        }
+//        if (root.left != null && root.left.val >= root.val) {
+//            return false;
+//        }
+//        if (root.right != null && root.right.val <= root.val) {
+//            return false;
+//        }
+//        return isValidBST(root.left) && isValidBST(root.right);
     }
 
 
