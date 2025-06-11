@@ -742,18 +742,20 @@ public class Hot100Solution {
         return new int[] {left, nums.length - 1};
     }
 
-    // 98. 验证二叉搜索树
+    // 98. 验证二叉搜索树：递归 or 中序遍历
     public boolean isValidBST(TreeNode root) {
-//        if (root == null) {
-//            return true;
-//        }
-//        if (root.left != null && root.left.val >= root.val) {
-//            return false;
-//        }
-//        if (root.right != null && root.right.val <= root.val) {
-//            return false;
-//        }
-//        return isValidBST(root.left) && isValidBST(root.right);
+        return _isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean _isValidBST(TreeNode node, long min, long max) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= min || node.val >= max) {
+            return false;
+        }
+        return _isValidBST(node.left, min, node.val)
+                && _isValidBST(node.right, node.val, max);
     }
 
 
