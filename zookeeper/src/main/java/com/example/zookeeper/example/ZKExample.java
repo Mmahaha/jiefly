@@ -26,9 +26,9 @@ public class ZKExample {
             ZKClientUtil.getClient();
             
             // 运行各种示例
-            registryExample();
+//            registryExample();
             lockExample();
-            configExample();
+//            configExample();
 //            leaderElectionExample();
             
             // 等待一段时间，以便观察结果

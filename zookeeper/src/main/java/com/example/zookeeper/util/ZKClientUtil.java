@@ -14,13 +14,13 @@ public class ZKClientUtil {
     private static final Logger logger = LoggerFactory.getLogger(ZKClientUtil.class);
     
     // ZooKeeper服务器地址，实际使用时应该配置到配置文件中
-    private static final String ZK_CONNECTION_STRING = "39.108.181.37:2181";
+    private static final String ZK_CONNECTION_STRING = "192.168.3.5:2181";
     // 会话超时时间
-    private static final int SESSION_TIMEOUT_MS = 60000;
+    private static final int SESSION_TIMEOUT_MS = 999999999;
     // 连接超时时间
     private static final int CONNECTION_TIMEOUT_MS = 15000;
     // 命名空间，所有操作都在该命名空间下进行
-    private static final String NAMESPACE = "example";
+    private static final String NAMESPACE = "jay";
     
     private static CuratorFramework client;
     
