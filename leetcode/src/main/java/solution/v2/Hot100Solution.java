@@ -758,6 +758,80 @@ public class Hot100Solution {
                 && _isValidBST(node.right, node.val, max);
     }
 
+    private static class LRUCache {
+
+        private final int capacity;
+        private final Map<Integer, Node> map;
+        private Node head = new Node(-1, -1, null, null); // dummy
+        private Node tail = new Node(-1, -1, null, null);
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            map = new HashMap<>(capacity);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key)) {
+                return -1;
+            }
+            Node node = map.get(key);
+            moveToHead(node);
+            return node.val;
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.val = value;
+                moveToHead(node);
+                return;
+            }
+            if (map.size() >= capacity) {
+                map.remove(tail.prev.key);
+                removeNode(tail.prev);
+            }
+            map.put(key, createNewHead(key, value));
+        }
+
+        private void moveToHead(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+        }
+
+        private Node createNewHead(int key, int value) {
+            Node node = new Node(key, value, head, head.next);
+            head.next.prev = node;
+            head.next = node;
+            return node;
+        }
+
+        private void removeNode(Node node) {
+            node.prev.next  = node.next;
+            node.next.prev = node.prev;
+            node.prev = null;
+            node.next = null;
+        }
+
+        class Node {
+            int key;
+            int val;
+            Node prev;
+            Node next;
+
+            public Node(int key, int val, Node prev, Node next) {
+                this.key = key;
+                this.val = val;
+                this.prev = prev;
+                this.next = next;
+            }
+        }
+    }
 
     public class TreeNode {
         int val;
